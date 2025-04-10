@@ -48,14 +48,18 @@
       margin-bottom: 1rem;
     }
 
-    .project {
+    .pub-card {
       background: #ece3f8;
       padding: 1rem;
       margin-bottom: 1rem;
       border-left: 5px solid #b19cd9;
     }
 
-    .project ul{
+    .pub-card:hover{
+      transform: scale(1.02);
+    }
+
+    .pub-card ul{
         padding-left: 1.5rem;
     }
 
@@ -66,6 +70,113 @@
       padding: 1rem;
       margin-top: 3rem;
     }
+    .patents-section {
+      background: #f8f0ff;
+      padding: 2rem;
+      border-top: 5px solid #b19cd9;
+    }
+
+    .patents-section h2 {
+      text-align: center;
+      color: #6a0dad;
+      margin-bottom: 2rem;
+      font-size: 2rem;
+    }
+
+    .project {
+      background: white;
+      padding: 1.5rem;
+      margin: 1rem auto;
+      max-width: 1600px;
+      border-left: 6px solid #b19cd9;
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(106, 13, 173, 0.1);
+      transition: transform 0.2s;
+      /* max-height: 200px; */
+    }
+
+    .project:hover {
+      transform: scale(1.02);
+    }
+
+    .project h3 {
+      color: #4b0082;
+      margin-bottom: 0.5rem;
+    }
+
+    .project p {
+      color: #444;
+      margin-bottom: 0.5rem;
+    }
+
+    .project a {
+      display: inline-block;
+      color: #6a0dad;
+      text-decoration: underline;
+      font-weight: bold;
+      font-size: medium;
+      margin-top: 0.1rem;
+    }
+    
+    .project ul{
+      font-size: medium;
+    }
+
+    .certificates-section {
+      background-color: #e6ddfc;
+      padding: 2rem 1rem;
+      border-top: 5px solid #8d03ff;
+    }
+
+    .certificates-section h2 {
+      text-align: center;
+      font-size: 2rem;
+      color: #551f79;
+      margin-bottom: 2rem;
+      font-weight: 700;
+    }
+
+    .cert-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 1.5rem;
+      justify-items: center;
+    }
+
+    .cert-card {
+      background: #ffffff;
+      padding: 1rem;
+      border-radius: 12px;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
+      width: 100%;
+      max-width: 400px;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .cert-card:hover {
+      transform: scale(1.02);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .cert-card h3 {
+      font-size: 1.1rem;
+      color: #2e0461;
+      margin-bottom: 0.5rem;
+    }
+
+    .cert-card p {
+      font-size: 0.9rem;
+      color: #444;
+      margin-bottom: 1rem;
+    }
+
+    .cert-card embed {
+      border-radius: 8px;
+      width: 100%;
+      height: 250px;
+      border: 1px solid #e4cbf3;
+    }
+
   </style>
 </head>
 <body>
@@ -76,7 +187,7 @@
         <!-- Profile Section -->
         <div style="display: flex; align-items: center; gap: 1rem;">
           <!-- Profile Image -->
-          <img src="MyFaceGhibli.jpg" alt="Ananya's Photo" style="width: 150px; height: 150px; object-fit: cover; border-radius: 50%; border: 3px solid white;">
+          <img src="imagesetc/MyFaceGhibli.jpg" alt="Ananya's Photo" style="width: 150px; height: 150px; object-fit: cover; border-radius: 50%; border: 3px solid white;">
           
           <!-- Name -->
           <h1 style="font-size: 2rem; margin: 0;">Vemula Ananya</h1>
@@ -87,6 +198,8 @@
           <a href="#about" style="color: white; margin: 0 1rem; text-decoration: none; font-weight: bold;">About</a>
           <a href="#projects" style="color: white; margin: 0 1rem; text-decoration: none; font-weight: bold;">Projects</a>
           <a href="#contact" style="color: white; margin: 0 1rem; text-decoration: none; font-weight: bold;">Contact</a>
+          <a href="#patentsandpublications" style="color: white; margin: 0 1rem; text-decoration: none; font-weight: bold;">Pants and Publications</a>
+          <a href="#certificates" style="color: white; margin: 0 1rem; text-decoration: none; font-weight: bold;">Certificates</a>
         </nav>
       </div>
     </header>
@@ -170,6 +283,72 @@
     </div>
       
   </section>
+
+  <!-- -------------------------------------------------------------------Patnets and publications -->
+
+  <section id="patentsandpublications" class="patents-section">
+    <h2>Patents and Publications</h2>
+  
+    <!-- Patent Example -->
+    <div class="pub-card">
+      <h3>Patent: Smart Braille Translator System</h3>
+      <p><strong>Status:</strong> Filed – Awaiting Grant</p>
+      <p>A mechanical refreshable braille system using OCR and magnetic CAM for real-time braille translation. Designed for accessibility in educational spaces for the visually impaired.</p>
+      <a href="https://github.com/Hrushik777/Bralliant" target="_blank">View Project Repo</a>
+    </div>
+
+    <div class="pub-card">
+      <h3>Patent: BinSmort</h3>
+      <p><strong>Status:</strong> Published </p>
+      <p>An AI and IoT integrated intelligent waste management system</p>
+      <p>Application number: 202411105123</p>
+    </div>
+  
+    <!-- Publication Example -->
+    <div class="pub-card">
+      <h3>Publication: Enhanced Image Superresolution Using Soft Computing Techniques</h3>
+      <p><strong>Conference:</strong> Computer Vision and Robotics 2025 (CVR2025)</p>
+      <p><strong>Status:</strong> Accepted</p>
+      <p>Proposes a deep learning framework combining fuzzy logic and convolutional neural networks for improving resolution of medical images with high accuracy.</p>
+      <a href="#" target="_blank">Read Abstract</a>
+    </div>
+
+    <div class="pub-card">
+      <h3>Publication: MRI-to-CT Scan Conversion Using CycleGAN: A Deep Learning Approach</h3>
+      <p><strong>Conference:</strong> International conference on computer, electronics, electrical engineering an their applications (IC2E32025)</p>
+      <p><strong>Status:</strong> Accepted</p>
+      <p>Proposes a deep learning approach of using CycleGan, Generative AI for the easy conversion of CT to MRI scans using unsupervised data.</p>
+      <a href="#" target="_blank">Read Abstract</a>
+    </div>
+  </section>
+
+  <!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-------------------------Certificates -->
+
+  <section id="certificates" class="certificates-section">
+    <h2>Certificates</h2>
+  
+    <div class="cert-grid">
+      <div class="cert-card">
+        <h3>NPTEL - Data Structures and Algorithms</h3>
+        <p><strong>Issued By:</strong> NPTEL, 2023</p>
+        <embed src="imagesetc/VemulaAnanya_dsacer.pdf" type="application/pdf" width="100%" height="250px">
+      </div>
+  
+      <div class="cert-card">
+        <h3>Coursera - Data, Signal, and Image Analysis</h3>
+        <p><strong>Issued By:</strong> Coursera, 2024</p>
+        <embed src="certificates/Coursera_DSIA_Certificate.pdf" type="application/pdf" width="100%" height="250px">
+      </div>
+  
+      <div class="cert-card">
+        <h3>Cisco - Enterprise Networking & Automation</h3>
+        <p><strong>Issued By:</strong> Cisco Networking Academy, 2024</p>
+        <embed src="certificates/Cisco_ENSA_Certificate.pdf" type="application/pdf" width="100%" height="250px">
+      </div>
+    </div>
+  </section>
+  
+  <!-- ------------------------------------------------------------------------Contact -->
 
   <section id="contact">
     <h2>Contact</h2>
