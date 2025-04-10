@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vemula Ananya Portfolio</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background-color: #f9f6ff;
+      color: #333;
+    }
+
+    header {
+      background-color: #6a0dad;
+      color: white;
+      padding: 1rem;
+      text-align: center;
+      padding-top: 2rem;
+    }
+
+    nav a {
+      color: white;
+      margin: 0 2rem;
+      text-decoration: none;
+      font-weight: bold;
+      /* padding-top: 40cm; */
+      /*padding-bottom: 4cm;*/
+      line-height: 4rem;
+      text-decoration: underline;
+    }
+
+    section {
+      padding: 1.5rem 2.5rem;
+      max-width: 900px;
+      line-height: 1.5rem;
+      margin: auto;
+    }
+
+    h2 {
+      color: #6a0dad;
+      margin-bottom: 1rem;
+    }
+
+    .project {
+      background: #ece3f8;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      border-left: 5px solid #b19cd9;
+    }
+
+    .project ul{
+        padding-left: 1.5rem;
+    }
+
+    footer {
+      background-color: #6a0dad;
+      color: white;
+      text-align: center;
+      padding: 1rem;
+      margin-top: 3rem;
+    }
+  </style>
+</head>
+<body>
+    <!-- <header style="background-color: #6a0dad; color: white; padding: 2rem;"> -->
+    <header>
+      <div style="max-width: 1000px; margin: auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap;">
+        
+        <!-- Profile Section -->
+        <div style="display: flex; align-items: center; gap: 1rem;">
+          <!-- Profile Image -->
+          <img src="MyFaceGhibli.jpg" alt="Ananya's Photo" style="width: 150px; height: 150px; object-fit: cover; border-radius: 50%; border: 3px solid white;">
+          
+          <!-- Name -->
+          <h1 style="font-size: 2rem; margin: 0;">Vemula Ananya</h1>
+        </div>
+  
+        <!-- Navigation -->
+        <nav style="margin-top: 1rem;">
+          <a href="#about" style="color: white; margin: 0 1rem; text-decoration: none; font-weight: bold;">About</a>
+          <a href="#projects" style="color: white; margin: 0 1rem; text-decoration: none; font-weight: bold;">Projects</a>
+          <a href="#contact" style="color: white; margin: 0 1rem; text-decoration: none; font-weight: bold;">Contact</a>
+        </nav>
+      </div>
+    </header>
+
+  <section id="about">
+    <h2>About Me</h2>
+    <p>Hi! I'm Vemula Ananya. I am doing BTech in Manipal University Jaipur. Most of my life, I have lived in Hyderabad, India and have lived in USA for around 3 years. I have many hobbies including Drawing, Painting, Creative Writing, Singing and I like Playing sports like badminton.
+    </p>
+    <br>
+    <h3><b>Getting a little more "Technical"...</b></h3><br>
+        <p>I'm a Harworking College student with skills in AI & ML. I have done a few full-stack projects and I'm currently seeking employement to contibute effectively to a company's mission. I'm known for excellent time management, leadership and quick adaptability. My international experience and tri-lingual skills, enhance my ability to communicate with people of many different backgrounds. Ready to add Value to your team!</p>
+  </section>
+
+  <section id="projects">
+    <h2>Projects</h2>
+    <div class="project">
+        <h2 style = "color: black; font-size: larger;" >PlayURCourt </h2>
+        <p>This app helps book courts/tables for games in and outside of college, avoiding exploitation by other students. The UI is very easy to understand.</p>
+        <br>
+        <h3>Tech Stack:</h3>
+        <ul>
+          <li>React Native</li>
+          <li>Django</li>
+          <li>MySQL</li>
+          <li>MySQL Workbench</li>
+        </ul>
+        <p><a href="https://github.com/Ananya-Vemula/PlayUrCourt_Sem3" style="color: #6a0dad; text-decoration: underline;">GitHub Repository</a></p>
+    </div>
+    <div class="project">
+        
+            <h2 style="color: black; font-size: larger;">MuBay</h2>
+            <p>This is a small web application whose sole purpose is to create a hub for trading within the campus itself. This also helps promote small businesses which are present within my college. This idea can be expanded to other colleges.</p>
+            <br>
+            <h3>Tech Stack:</h3>
+            <ul>
+              <li>React</li>
+              <li>MySQL</li>
+            </ul>
+            <p><a href="https://github.com/Ananya-Vemula/MUBay_WEBTECH4" style="color: #6a0dad; text-decoration: underline;">GitHub Repository</a></p>
+    </div> 
+    <div class="project">
+        <h2 style="color: black; font-size: larger;">BinSmort</h2>
+        <p>BinSmort is an innovative solution designed to revolutionize waste management by efficiently categorizing waste into recyclable, biodegradable, and electronic waste. This smart system aligns with global sustainability goals, aiming to make a significant positive impact worldwide. By optimizing waste separation, users can track their scores based on proper waste disposal, promoting community engagement and awareness.</p>
+        <br>
+        <h3>Tech Stack:</h3>
+        <ul>
+            <li>TensorFlow & YOLOv8 Model</li>
+            <li>PyTorch</li>
+            <li>TinkerCAD</li>
+            <li>CVAT.ai</li>
+        </ul>
+        <p><a href="https://github.com/Ananya-Vemula/PBL2_BinSmort" style="color: #6a0dad; text-decoration: underline;">GitHub Repository</a></p>
+    </div>
+    <div class="project">
+        <h2 style="color: black; font-size: larger;">MRI to CT Scan and Vice-versa</h2>
+        <p>The objective of this project is to develop a GenAI-based framework for seamless conversion between MRI and CT scan images.</p>
+        <br>
+        <h3>Tech Stack:</h3>
+        <ul>
+          <li>Python (Majorly used), TensorFlow, and TensorFlow Datasets</li>
+          <li>Pix2Pix model, Data preprocessing using filters (Sobel, Median, Normalizing, and more)</li>
+          <li>Implemented UNIT for unpaired image translation</li>
+          <li>Previously experimented with CycleGAN</li>
+          <li>Considering Diffusion models and AG-GAN for finer details and better results</li>
+        </ul>
+        <p><a href="https://github.com/Ananya-Vemula/MRItoCTViceVersa" style="color: #6a0dad; text-decoration: underline;">GitHub Repository</a></p>
+    </div>
+
+    <div class="project">
+        <h2 style="color: black; font-size: larger;">Brailleint</h2>
+        <p>Uses OCR technology to read text from non-standard braille material to braille on a mechanical system in real-time. This uses a refreshable braille system to raise dots, using a magnetic CAM.</p>
+        <br>
+        <h3>Tech Stack:</h3>
+        <ul>
+          <li>EasyOCR</li>
+          <li>Arduino</li>
+          <li>3D Printing Basics</li>
+          <li>Fusion 3D</li>
+        </ul>
+        <p><a href="https://github.com/Hrushik777/Bralliant" style="color: #6a0dad; text-decoration: underline;">GitHub Repository</a></p>
+    </div>
+      
+  </section>
+
+  <section id="contact">
+    <h2>Contact</h2>
+    <p>Email: ananyavemula123@gmail.com</p>
+    <p>LinkedIn: <a href="https://www.linkedin.com/in/vemula-ananya-23hydmuj/" style="color: #6a0dad; text-decoration: underline;"> Click Here! </a></p>
+    <p>GitHub: <a href="https://github.com/Ananya-Vemula" style="color: #6a0dad; text-decoration: underline;"> Click Here! </a></p>
+    <p>LeetCode: <a href="https://leetcode.com/u/Ananya_Vemula_23/" style="color: #6a0dad; text-decoration: underline;"> Click Here! </a></p>
+    <p>HackerRank: <a href="https://www.hackerrank.com/profile/anuanyaabc" style="color: #6a0dad; text-decoration: underline;"> Click Here! </a></p>
+    <p>Kaggle: <a href="https://www.kaggle.com/ananyavemula" style="color: #6a0dad; text-decoration: underline;"> Click Here! </a></p>
+    </section>
+
+  <footer>
+    <p>&copy; 2025 Vemula Ananya</p>
+  </footer>
+</body>
+</html>
