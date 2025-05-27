@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vemula Ananya Portfolio</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background-color: #efe2fa;
+      color: #333;
+    }
+
+    .name-banner {
+      font-size: 3rem;
+      font-family: 'Segoe UI', sans-serif;
+      text-align: center;
+      color: #ffffff;
+      margin-top: 2rem;
+      animation: fadeSlideIn 1.5s ease forwards;
+      opacity: 0;
+      text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    @keyframes fadeSlideIn {
+      0% {
+        opacity: 0;
+        transform: translateY(-30px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .animated-nav {
+  margin-top: 1rem;
+  text-align: center;
+  animation: navFadeIn 1.5s ease-in-out;
+}
+
+.animated-nav a {
+  color: white;
+  margin: 0 1rem;
+  text-decoration: none;
+  font-weight: bold;
+  font-family: 'Segoe UI', sans-serif;
+  transition: color 0.3s ease, transform 0.3s ease;
+  display: inline-block;
+  position: relative;
+}
+
+.animated-nav a:hover {
+  color: #ffcbf2;
+  transform: translateY(-2px);
+}
+
+@keyframes navFadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animated-nav a::after {
+  content: "";
+  display: block;
+  width: 0;
+  height: 2px;
+  background: #ffcbf2;
+  transition: width 0.3s;
+  margin: auto;
+}
+
+.animated-nav a:hover::after {
+  width: 100%;
+}
+
+
+
+
+    header {
+      background-color: #6a0dad;
+      color: white;
+      padding: 1rem;
+      text-align: center;
+      padding-top: 2rem;
+    }
+
+    nav a {
+      color: white;
+      margin: 0 2rem;
+      text-decoration: none;
+      font-weight: bold;
+      /* padding-top: 40cm; */
+      /*padding-bottom: 4cm;*/
+      line-height: 4rem;
+      text-decoration: underline;
+    }
+
+    section {
+      padding: 1.5rem 2.5rem;
+      max-width: 900px;
+      line-height: 1.5rem;
+      margin: auto;
+    }
+
+
+    h2 {
+      color: #6a0dad;
+      margin-bottom: 1rem;
+    }
+
+    .pub-card {
+      background: #ece3f8;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      border-left: 5px solid #b19cd9;
+    }
+
+    .pub-card:hover{
+      transform: scale(1.02);
+    }
+
+    .pub-card ul{
+        padding-left: 1.5rem;
+    }
+
+    footer {
+      background-color: #6a0dad;
+      color: white;
+      text-align: center;
+      padding: 1rem;
+      margin-top: 3rem;
+    }
+    .patents-section {
+      background: #f8f0ff;
+      padding: 2rem;
+      border-top: 5px solid #b19cd9;
+    }
+
+    .patents-section h2 {
+      text-align: center;
+      color: #6a0dad;
+      margin-bottom: 2rem;
+      font-size: 2rem;
+    }
+
+    .project {
+      background: white;
+      padding: 1.5rem;
+      margin: 1rem auto;
+      max-width: 1600px;
+      border-left: 6px solid #b19cd9;
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(106, 13, 173, 0.1);
+      transition: transform 0.2s;
+      /* max-height: 200px; */
+    }
+
+    .project:hover {
+      transform: scale(1.02);
+    }
+
+    .project h3 {
+      color: #4b0082;
+      margin-bottom: 0.5rem;
+    }
+
+    .project p {
+      color: #444;
+      margin-bottom: 0.5rem;
+    }
+
+    .project a {
+      display: inline-block;
+      color: #6a0dad;
+      text-decoration: underline;
+      font-weight: bold;
+      font-size: medium;
+      margin-top: 0.1rem;
+    }
+    
+    .project ul{
+      font-size: medium;
+    }
+
+    .cert-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+      justify-items: center;
+    }
+
+    .cert-card {
+      background: #ffffff;
+      padding: 1rem;
+      border-radius: 12px;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
+      width: 100%;
+      max-width: 450px;
+      height: 280px; /* Wider than tall: rectangular shape */
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .cert-card:hover {
+      transform: scale(1.02);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .cert-card h3 {
+      font-size: 1rem;
+      color: #2e0461;
+      margin-bottom: 0.3rem;
+    }
+
+    .cert-card p {
+      font-size: 0.8rem;
+      color: #444;
+      margin-bottom: 0.5rem;
+    }
+
+    .cert-card embed {
+      border-radius: 8px;
+      width: 100%;
+      height: 150px; /* Keeps it in landscape mode */
+      border: 1px solid #e4cbf3;
+      object-fit: contain;
+    }
+
+    .skills-section {
+      background-color: #f9f6ff;
+      padding: 2rem 1rem;
+      border-top: 5px solid #8d03ff;
+      text-align: center;
+    }
+
+    .skills-section h2 {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #551f79;
+      margin-bottom: 1.5rem;
+    }
+
+    .skills-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.7rem;
+      justify-content: center;
+    }
+
+    .skills-grid span {
+      background-color: #e0d6fa;
+      color: #3e0c6e;
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      font-size: 0.95rem;
+      font-family: 'Segoe UI', sans-serif;
+      transition: all 0.2s ease;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
+    }
+
+    .skills-grid span:hover {
+      background-color: #cbb8f6;
+      transform: scale(1.05);
+    }
+
+
+
+
+  </style>
+</head>
+<body>
+    <!-- <header style="background-color: #6a0dad; color: white; padding: 2rem;"> -->
+    <header>
+      <div style="max-width: 1000px; margin: auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap;">
+        
+        <!-- Profile Section -->
+        <div style="display: flex; align-items: center; gap: 1rem;">
+          <!-- Profile Image -->
+          <img src="imagesetc/MyFaceGhibli.jpg" alt="Ananya's Photo" style="width: 150px; height: 150px; object-fit: cover; border-radius: 50%; border: 3px solid white;">
+          
+          <!-- Name -->
+          <h1 style="font-size: 3rem; margin: 0;" class = "name-banner">Vemula Ananya</h1>
+          
+        </div>
+  
+        <!-- Navigation -->
+        <nav class="animated-nav">
+          <a href="#about">About</a>
+          <a href="#projects">Projects</a>
+          <a href="#contact">Contact</a>
+          <a href="#patentsandpublications">Patents and Publications</a>
+          <a href="#certificates">Certificates</a>
+          <a href="#skills">Skills</a>
+        </nav>
+        
+      </div>
+    </header>
+
+  <section id="about">
+    <h2><b>About Me</b></h2>
+    <p style="font-size: 1.5rem; font-family: 'Segoe UI', sans-serif;">
+      Hi! I'm Vemula Ananya. I am doing BTech in Manipal University Jaipur. Most of my life, I have lived in Hyderabad, India and have lived in USA for around 3 years. I have many hobbies including Drawing, Painting, Creative Writing, Singing and I like Playing sports like badminton.
+    </p>    
+    <br>
+    <br>
+    <h2><b>Getting a little more "Technical"...</b></h2>
+        <p style="font-size: 1.5rem; font-family: 'Segoe UI', sans-serif;">I'm a Harworking College student with skills in AI & ML. I have done a few full-stack projects and I'm currently seeking employement to contibute effectively to a company's mission. I'm known for excellent time management, leadership and quick adaptability. My international experience and tri-lingual skills, enhance my ability to communicate with people of many different backgrounds. Ready to add Value to your team!</p>
+  </section>
+
+  <section id="projects">
+    <h2>Projects</h2>
+    <div class="project">
+        <h2 style = "color: black; font-size: larger;" >PlayURCourt </h2>
+        <p>This app helps book courts/tables for games in and outside of college, avoiding exploitation by other students. The UI is very easy to understand.</p>
+        <br>
+        <h3>Tech Stack:</h3>
+        <ul>
+          <li>React Native</li>
+          <li>Django</li>
+          <li>MySQL</li>
+          <li>MySQL Workbench</li>
+        </ul>
+        <p><a href="https://github.com/Ananya-Vemula/PlayUrCourt_Sem3" style="color: #6a0dad; text-decoration: underline;">GitHub Repository</a></p>
+    </div>
+    <div class="project">
+        
+            <h2 style="color: black; font-size: larger;">MuBay</h2>
+            <p>This is a small web application whose sole purpose is to create a hub for trading within the campus itself. This also helps promote small businesses which are present within my college. This idea can be expanded to other colleges.</p>
+            <br>
+            <h3>Tech Stack:</h3>
+            <ul>
+              <li>React</li>
+              <li>MySQL</li>
+            </ul>
+            <p><a href="https://github.com/Ananya-Vemula/MUBay_WEBTECH4" style="color: #6a0dad; text-decoration: underline;">GitHub Repository</a></p>
+    </div> 
+    <div class="project">
+        <h2 style="color: black; font-size: larger;">BinSmort</h2>
+        <p>BinSmort is an innovative solution designed to revolutionize waste management by efficiently categorizing waste into recyclable, biodegradable, and electronic waste. This smart system aligns with global sustainability goals, aiming to make a significant positive impact worldwide. By optimizing waste separation, users can track their scores based on proper waste disposal, promoting community engagement and awareness.</p>
+        <br>
+        <h3>Tech Stack:</h3>
+        <ul>
+            <li>TensorFlow & YOLOv8 Model</li>
+            <li>PyTorch</li>
+            <li>TinkerCAD</li>
+            <li>CVAT.ai</li>
+        </ul>
+        <p><a href="https://github.com/Ananya-Vemula/PBL2_BinSmort" style="color: #6a0dad; text-decoration: underline;">GitHub Repository</a></p>
+    </div>
+    <div class="project">
+        <h2 style="color: black; font-size: larger;">MRI to CT Scan and Vice-versa</h2>
+        <p>The objective of this project is to develop a GenAI-based framework for seamless conversion between MRI and CT scan images.</p>
+        <br>
+        <h3>Tech Stack:</h3>
+        <ul>
+          <li>Python (Majorly used), TensorFlow, and TensorFlow Datasets</li>
+          <li>Pix2Pix model, Data preprocessing using filters (Sobel, Median, Normalizing, and more)</li>
+          <li>Implemented UNIT for unpaired image translation</li>
+          <li>Previously experimented with CycleGAN</li>
+          <li>Considering Diffusion models and AG-GAN for finer details and better results</li>
+        </ul>
+        <p><a href="https://github.com/Ananya-Vemula/MRItoCTViceVersa" style="color: #6a0dad; text-decoration: underline;">GitHub Repository</a></p>
+    </div>
+
+    <div class="project">
+        <h2 style="color: black; font-size: larger;">Brailleint</h2>
+        <p>Uses OCR technology to read text from non-standard braille material to braille on a mechanical system in real-time. This uses a refreshable braille system to raise dots, using a magnetic CAM.</p>
+        <br>
+        <h3>Tech Stack:</h3>
+        <ul>
+          <li>EasyOCR</li>
+          <li>Arduino</li>
+          <li>3D Printing Basics</li>
+          <li>Fusion 3D</li>
+        </ul>
+        <p><a href="https://github.com/Hrushik777/Bralliant" style="color: #6a0dad; text-decoration: underline;">GitHub Repository</a></p>
+    </div>
+      
+  </section>
+
+  <!-- -------------------------------------------------------------------Patnets and publications -->
+
+  <section id="patentsandpublications" class="patents-section">
+    <h2>Patents and Publications</h2>
+  
+    <!-- Patent Example -->
+    <div class="pub-card">
+      <h3>Patent: Smart Braille Translator System</h3>
+      <p><strong>Status:</strong> Filed – Awaiting Grant</p>
+      <p>A mechanical refreshable braille system using OCR and magnetic CAM for real-time braille translation. Designed for accessibility in educational spaces for the visually impaired.</p>
+      <a href="https://github.com/Hrushik777/Bralliant" target="_blank">View Project Repo</a>
+    </div>
+
+    <div class="pub-card">
+      <h3>Patent: BinSmort</h3>
+      <p><strong>Status:</strong> Published </p>
+      <p>An AI and IoT integrated intelligent waste management system</p>
+      <p>Application number: 202411105123</p>
+    </div>
+  
+    <!-- Publication Example -->
+    <div class="pub-card">
+      <h3>Publication: Enhanced Image Superresolution Using Soft Computing Techniques</h3>
+      <p><strong>Conference:</strong> Computer Vision and Robotics 2025 (CVR2025)</p>
+      <p><strong>Status:</strong> Accepted</p>
+      <p>Proposes a deep learning framework combining fuzzy logic and convolutional neural networks for improving resolution of medical images with high accuracy.</p>
+      <a href="#" target="_blank">Read Abstract</a>
+    </div>
+
+    <div class="pub-card">
+      <h3>Publication: MRI-to-CT Scan Conversion Using CycleGAN: A Deep Learning Approach</h3>
+      <p><strong>Conference:</strong> International conference on computer, electronics, electrical engineering an their applications (IC2E32025)</p>
+      <p><strong>Status:</strong> Accepted</p>
+      <p>Proposes a deep learning approach of using CycleGan, Generative AI for the easy conversion of CT to MRI scans using unsupervised data.</p>
+      <a href="#" target="_blank">Read Abstract</a>
+    </div>
+  </section>
+
+  <!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-------------------------Certificates -->
+
+  <section id="certificates" class="certificates-section">
+    <h2>Certificates</h2>
+  
+    <div class="cert-grid">
+      <div class="cert-card">
+        <h3>NPTEL - Data Structures and Algorithms</h3>
+        <p><strong>Issued By:</strong> NPTEL, 2023</p>
+        <embed src="imagesetc/VemulaAnanya_dsacer.pdf" type="application/pdf" width="100%" height="250px">
+      </div>
+  
+      <div class="cert-card">
+        <h3>NPTEL - Design and Analysis of Algorithms</h3>
+        <p><strong>Issued By:</strong> NPTEL, 2024</p>
+        <embed src="imagesetc\Design and Analysis of Algorithms.pdf" type="application/pdf" width="100%" height="250px">
+      </div>
+  
+      <div class="cert-card">
+        <h3>NPTEL - Data Base Management Systems</h3>
+        <p><strong>Issued By:</strong> NPTEL, 2025</p>
+        <embed src="imagesetc\Data Base Management System.pdf" type="application/pdf" width="100%" height="250px">
+      </div>
+
+      <div class="cert-card">
+        <h3>ORACLE - Data Base programming with SQL</h3>
+        <p><strong>Issued By:</strong> Oracle, 2023</p>
+        <embed src="imagesetc\229310345_VemulaAnanyaOracleCertificate1.pdf" type="application/pdf" width="100%" height="250px">
+      </div>
+
+      <div class="cert-card">
+        <h3>ORACLE - Data Base Foundations</h3>
+        <p><strong>Issued By:</strong> Oracle, 2023</p>
+        <embed src="imagesetc\229310345_VemulaAnanyaOracleCertificate2.pdf" type="application/pdf" width="100%" height="250px">
+      </div>
+
+      <div class="cert-card">
+        <h3>Coursera - Preparing Data for Analysis with Microsoft Excel</h3>
+        <p><strong>Issued By:</strong> Microsoft, 2023</p>
+        <embed src="imagesetc\VemulaAnanya_229310345_MSEx_CourseraCertificate.pdf" type="application/pdf" width="100%" height="250px">
+      </div>
+
+    </div>
+  </section>
+  
+  <section id="skills" class="skills-section">
+    <h2>Skills</h2>
+    <div class="skills-grid">
+      <span>Python</span>
+      <span>ML</span>
+      <span>Django</span>
+      <span>REST API</span>
+      <span>AI</span>
+      <span>MySQL</span>
+      <span>C programming</span>
+      <span>Image processing</span>
+      <span>Data Science</span>
+      <span>DBMS</span>
+      <span>PostgreSQL</span>
+      <span>Postman</span>
+      <span>DSA</span>
+      <span>DAA</span>
+      <span>Computer vision (CNN, RNN, RCNN etc)</span>
+      <span>Computer Networks</span>
+      <span>CycleGAN</span>
+      <span>GenAI</span>
+      <span>NLP and LLM</span>
+      <span>Basics of Cloud and IoT</span>
+      <span>OOPS in Python</span>
+      <span>Python and its libraries</span>
+      <span>PyTorch</span>
+      <span>TensorFlow Basics</span>
+    </div>
+  </section>
+  
+  <!-- ------------------------------------------------------------------------Contact -->
+
+  <section id="contact">
+    <h2><b>Contact</b></h2>
+    <p style="font-size: 1.5rem; font-family: 'Segoe UI', sans-serif;">
+      Email: <a href="mailto:ananyavemula123@gmail.com" style="color: #551f79; text-decoration: none;">ananyavemula123@gmail.com</a>
+    </p>    
+    <p style="font-size: 1.5rem; font-family: 'Segoe UI', sans-serif;">LinkedIn: <a href="https://www.linkedin.com/in/vemula-ananya-23hydmuj/" style="color: #6a0dad; text-decoration: underline;"> Click Here! </a></p>
+    <p style="font-size: 1.5rem; font-family: 'Segoe UI', sans-serif;">GitHub: <a href="https://github.com/Ananya-Vemula" style="color: #6a0dad; text-decoration: underline;"> Click Here! </a></p>
+    <p style="font-size: 1.5rem; font-family: 'Segoe UI', sans-serif;">LeetCode: <a href="https://leetcode.com/u/Ananya_Vemula_23/" style="color: #6a0dad; text-decoration: underline;"> Click Here! </a></p>
+    <p style="font-size: 1.5rem; font-family: 'Segoe UI', sans-serif;">HackerRank: <a href="https://www.hackerrank.com/profile/anuanyaabc" style="color: #6a0dad; text-decoration: underline;"> Click Here! </a></p>
+    <p style="font-size: 1.5rem; font-family: 'Segoe UI', sans-serif;">Kaggle: <a href="https://www.kaggle.com/ananyavemula" style="color: #6a0dad; text-decoration: underline;"> Click Here! </a></p>
+    </section>
+
+  <footer>  
+    <p>&copy; 2025 Vemula Ananya</p>
+  </footer>
+</body>
+</html>
