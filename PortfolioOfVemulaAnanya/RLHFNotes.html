@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>RLHF Introduction</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 40px;
+      background-color: #f9f9f9;
+    }
+    h1 {
+      color: #333;
+    }
+    section {
+      margin-bottom: 30px;
+    }
+    ul {
+      list-style-type: disc;
+      margin-left: 20px;
+    }
+    .emoji {
+      font-size: 1.2em;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>RLHF (Reinforcement Learning with Human Feedback)</h1>
+
+  <section>
+    <h2>Key Concept</h2>
+    <p>RLHF tunes a model's <strong>responses at the response level</strong>, not at the next-token prediction level like standard language modeling.</p>
+    <p>It is used in the <strong>alignment phase</strong>, after pretraining, to make the model behave in a way that is helpful, harmless, and honest.</p>
+  </section>
+
+  <section>
+    <h2>Core Components of RLHF</h2>
+    <ul>
+      <li><strong>Pretrained Model</strong>: Contains most of the model’s knowledge and capabilities. Alignment focuses on how that knowledge is used.</li>
+      <li><strong>Reward Model</strong>: Trained separately using human preferences (ranked outputs). Depends on the application domain.</li>
+      <li><strong>Reinforcement Learning Step</strong>: Fine-tuned using PPO or similar algorithms with help from the reward model.</li>
+      <li><strong>Contrastive Loss</strong>: Used with negative feedback to help differentiate good and bad responses.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Alignment Hypothesis</h2>
+    <p>According to the <strong>Superficial Alignment Hypothesis</strong></p>
+    <ul>
+      <li>Alignment is mostly about <strong>style and format</strong>, not deep reasoning.</li>
+      <li>A small set of examples might be enough to tune a pretrained model.</li>
+      <li>This suggests that <strong>alignment ≠ knowledge</strong>.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2> Milestones in RLHF & Alignment</h2>
+    <ul>
+      <li><strong>First ChatGPT</strong>: Trained using RLHF.</li>
+      <li><strong>Shift in Post-Training Methods</strong>: The DPO (Direct Preference Optimization) method emerged.</li>
+      <li><strong>DPO Era Models</strong>: Zephyr-Beta, Tulu 2, and others demonstrated improved alignment through direct preference learning.</li>
+    </ul>
+    <p>DPO (Direct preference optimization): Directly learns from human preferences without using a reward model; simpler and stable.</p>
+    <p>PPO (Proximal policy optimization): A reinforcement learning algorithm commonly used in RLHF with a reward model.</p>
+  </section>
+
+  <section>
+    <h2> Alternative Feedback Methods</h2>
+    <ul>
+      <li><strong>TAMER</strong>: Humans iteratively score actions, teaching the agent a reward model.</li>
+      <li><strong>COACH</strong>: Human feedback is used to tune the advantage function.</li>
+    </ul>
+    <p>These two are human in loop methods for RL, usually used in Robotics/RL games and not usually in LLMs. Here a human gives active feedback according to rank or advantage shaping.</p>
+  </section>
+
+  <section>
+    <h2> Modern Language Model Architecture</h2>
+    <ul>
+      <li>Uses <strong>decoder-only Transformers</strong> (e.g., GPT architecture).</li>
+      <li>Rely on <strong>self-attention mechanisms</strong> to understand and generate language.</li>
+    </ul>
+  </section>
+  <hr>
+  <hr>
+
+  <h1>Reward Models in Alignment</h1>
+  <p>Reward models are critical components in aligning language models to human preferences by assigning scalar values that represent the quality of a model's output.</p>
+
+  <h2>Types of Reward Models</h2>
+  <ul>
+    <li><strong>Outcome Reward Models (ORM):</strong>
+      <ul>
+        <li>Assess the final output of a language model.</li>
+        <li>Predicts the probability that a response leads to a correct or desirable outcome.</li>
+        <li>Best suited for tasks with clear, single-answer objectives.</li>
+      </ul>
+    </li>
+    <li><strong>Process Reward Models (PRM):</strong>
+      <ul>
+        <li>Evaluate the intermediate reasoning steps taken by a model.</li>
+        <li>Assigns a reward score to each step in the reasoning process.</li>
+        <li>Helpful for tasks requiring complex, multi-step reasoning or transparency.</li>
+      </ul>
+    </li>
+  </ul>
+
+  <h2>Optimization Techniques for Alignment</h2>
+  <ol>
+    <li><strong>Reward Modeling:</strong>
+      <ul>
+        <li>A model is trained using human-labeled preferences.</li>
+        <li>Outputs a scalar reward signal for future generations based on quality.</li>
+        <li>Used in RLHF setups for guiding policy improvement.</li>
+      </ul>
+    </li>
+    <li><strong>Instruction Fine-tuning:</strong>
+      <ul>
+        <li>Supervised fine-tuning of language models using curated question-answer pairs.</li>
+        <li>Teaches the model the format and style of human-aligned responses.</li>
+        <li>Acts as the first stage before reinforcement-based fine-tuning.</li>
+      </ul>
+    </li>
+    <li><strong>Rejection Sampling:</strong>
+      <ul>
+        <li>A filtering method used to discard poor outputs.</li>
+        <li>Only keeps samples that align with human preferences or meet reward thresholds.</li>
+        <li>Simple and effective for low-latency deployment or training efficiency.</li>
+      </ul>
+    </li>
+    <li><strong>Policy Gradients:</strong>
+      <ul>
+        <li>Updates model parameters using the reward model’s signal.</li>
+        <li>Part of standard reinforcement learning (e.g., PPO).</li>
+        <li>Trains the model to prefer high-reward outputs by maximizing expected reward.</li>
+      </ul>
+    </li>
+    <li><strong>Direct Alignment Algorithms:</strong>
+      <ul>
+        <li>Optimize model behavior directly from human preferences, bypassing a reward model.</li>
+        <li>Example: Direct Preference Optimization (DPO).</li>
+        <li>Reduces complexity and instability from intermediate reward estimation.</li>
+      </ul>
+    </li>
+  </ol>
+
+  <p><strong>Conclusion:</strong> These techniques are fundamental in ensuring that large language models not only generate fluent text but also behave in ways aligned with human values and expectations.</p>
+  <div style="text-align: center;">
+  <img src="imagesfornotes/RLHFDiag.jpg" alt="RLHF Diagram" style="max-width: 70%; height: auto;">
+  </div>
+  <p> The diagram above shows the following: 
+    First, A base model is trained with human + synthetic instructions ie. the initial IFT (Instruction fine tuning), creating an SFT model ie Supervised fine tuned model
+    Second, A reward model or an LLM judge is used (made with human preferences), along with the help of PPO or DPO or other multiple optimization techniques to calculate loss, which is send back to retrain the SFT model.
+    Finally, we retrain the SFT model, creating a new aligned model after some n iterations.</p>
+  
+  <hr>
+  <hr>
+   <title>PPO (Proximal Policy Optimization) - Reinforcement Learning Notes</title>
+</head>
+<body>
+  <h1> PPO (Proximal Policy Optimization) Algorithm</h1>
+
+  <h2> Core Components</h2>
+  <table border="1" cellpadding="8" cellspacing="0">
+    <tr>
+      <th>Component</th>
+      <th>Role</th>
+    </tr>
+    <tr>
+      <td>Policy Network</td>
+      <td>Takes a state as input and outputs a probability distribution over actions.</td>
+    </tr>
+    <tr>
+      <td>Value Function Network (Critic)</td>
+      <td>Takes a state (or state-action pair) and estimates the Q-value (expected return).</td>
+    </tr>
+  </table>
+
+  <h2>Training Loop (Simplified)</h2>
+  <h3>Pass 1 (One batch of trajectories):</h3>
+  <ul>
+    <li>Use <strong>Policy Network</strong> to generate actions from current states.</li>
+    <li>Use <strong>Value Function Network</strong> to estimate Q-values for these actions.</li>
+    <li>Compute <strong>Advantage = Actual Return − Estimated Value</strong>
+      <ul>
+        <li>Actual Return = Sum of discounted future rewards</li>
+      </ul>
+    </li>
+    <li>Compute losses and backpropagate:
+      <ul>
+        <li><strong>Value Network →</strong> MSE loss from advantage</li>
+        <li><strong>Policy Network →</strong> Clipped surrogate objective loss</li>
+      </ul>
+    </li>
+  </ul>
+
+  <h3>Pass 2 and Onward:</h3>
+  <ul>
+    <li>For each new batch:
+      <ul>
+        <li>Recalculate MSE loss for value network</li>
+        <li>Recalculate clipped objective loss for policy network</li>
+        <li>Update both networks</li>
+        <li>Repeat for several epochs</li>
+      </ul>
+    </li>
+  </ul>
+
+  <h2>Policy Network Loss (Clipped Objective)</h2>
+  <ul>
+    <li>Store:
+      <ul>
+        <li>Old probabilities from previous policy</li>
+        <li>Actions and corresponding states</li>
+      </ul>
+    </li>
+    <li>Compute:
+      <ul>
+        <li><code>ratio = new_prob / old_prob</code></li>
+        <li><code>fin1 = ratio × advantage</code></li>
+        <li><code>fin2 = clip(ratio, 1 - ε, 1 + ε) × advantage</code></li>
+        <li><code>loss = -min(fin1, fin2)</code> (negative for gradient ascent)</li>
+      </ul>
+    </li>
+
+    <br>
+    <br>
+    <br>
+
+    <img src="imagesfornotes/PPOdiag.jpg" alt="PPO conclusion" style="max-width: 70%; height: auto;">
+    <br>
+    <br>
+    <br>
+
+    <li>Use this loss to update the policy network parameters.</li>
+    
+    <br>
+    <img src="imagesfornotes/ClippingFormula.jpg" alt="Clipping formula" style="max-width: 70%; height: auto;">
+
+  </ul>
+
+  <h2>Value Network Loss (Critic Loss)</h2>
+  <ul>
+    <li>Use Mean Squared Error (MSE) between predicted value and actual return.</li>
+    <li>Update value function network with this loss.</li>
+  </ul>
+
+  <p><strong>Conclusion:</strong> PPO efficiently balances stability and performance by constraining policy updates and optimizing both the actor and critic networks iteratively.</p>
+
+  <hr>
+  <hr>
+  
+   <title>RLHF & PPO - Clarification Points</title>
+  <h1>🚨 Key Points You Got Confused About (Clarified)</h1>
+  <ul>
+    <li><strong>❌ Confusion:</strong> PPO trains the <em>reward model</em>.</li>
+    <li><strong>✅ Correction:</strong> PPO does <u>not</u> train the reward model. It trains the <strong>policy network</strong> using signals from a <u>pretrained</u> reward model.</li>
+
+    <li><strong>❌ Confusion:</strong> PPO targets the <em>value network of the base model</em>.</li>
+    <li><strong>✅ Correction:</strong> PPO uses a <strong>value network</strong> (critic) that may be a separate head or module, not the base model's own components.</li>
+
+    <li><strong>❌ Confusion:</strong> Reward model and value network are the same.</li>
+    <li><strong>✅ Correction:</strong> The <strong>reward model</strong> is trained with human feedback to score outputs. The <strong>value network</strong> is part of PPO's RL framework and estimates expected returns for actions/states.</li>
+
+    <li><strong>❌ Confusion:</strong> PPO works on token-level predictions like standard LM training.</li>
+    <li><strong>✅ Correction:</strong> PPO operates at the <strong>response-level</strong>, optimizing complete outputs using reward feedback — not token-by-token.</li>
+
+    <li><strong>❌ Confusion:</strong> PPO is a one-step or static optimization.</li>
+    <li><strong>✅ Correction:</strong> PPO is a <strong>multi-step iterative process</strong>, involving repeated sampling, advantage calculation, and gradient updates to both policy and value networks.</li>
+  </ul>
+
+  <hr>
+  <hr>
+   <title>DPO (Direct Preference Optimization)</title>
+
+  <h2>What is DPO?</h2>
+  <p>DPO is a post-training alignment method that eliminates the need for a separate reward model by training a language model to directly increase the probability of preferred outputs.</p>
+
+  <h2>Key Steps</h2>
+  <ol>
+    <li>Pretrain a base LLM (Large Language Model).</li>
+    <li>Generate pairs of outputs from the LLM and collect human feedback (as rankings or preferences).</li>
+    <li>Train the model to assign:
+      <ul>
+        <li>High probability to preferred (positive) completions.</li>
+        <li>Low probability to less preferred (negative) completions.</li>
+      </ul>
+    </li>
+    <p>Overall, our goal is the 1) Get rid of the reward model and 2) Avoid the model from updating too much.</p>
+  </ol>
+
+  <img src = "imagesfornotes/EQ1DPO.jpg" alt = "MainGoals of DPO" style = "max-width: 70%; height: auto;" />
+
+
+  <h2>Replacement for Reward Model: Bradley-Terry Model</h2>
+  <p>Although DPO aims to avoid using a traditional reward model, it does so by modeling the <strong>probability of preference</strong> using the Bradley-Terry (BT) model.</p>
+
+  <p>The BT model uses the <strong>sigmoid function</strong> to convert the log-likelihood difference between two outputs into a probability value between 0 and 1:</p>
+
+  <pre>
+    P(prefer A over B) = sigmoid(πₐ - π_b)
+  </pre>
+
+
+  <p>Here, πₐ and π_b are log-likelihoods (or pseudo-reward scores) of the two completions.</p>
+
+
+  <h2>Preventing Over-Updating: KL Divergence Regularization</h2>
+  <p>To ensure the model doesn’t drift too far from the original pretrained distribution, DPO adds a <strong>KL divergence</strong> penalty. This ensures stability and preserves base model knowledge.</p>
+
+  <pre>
+    Loss = -log( sigmoid(πₐ - π_b) ) + {β * KL(π_new || π_old)}
+  </pre>
+
+  <p><strong>Explanation:</strong></p>
+  <ul>
+    <li><code>KL(π_new || π_old)</code>: Penalizes the new model for deviating too much from the original (preference-unaware) model.</li>
+    <li><code>β</code>: A hyperparameter controlling how strong the penalty is.</li>
+  </ul>
+
+  <p>This allows the model to learn human-aligned preferences <strong>without needing a separate reward model</strong>, yet keeping it close to its pretrained distribution.</p>
+
+  <img src = "imagesfornotes/FinalDPO.jpg" alt = "FinalEquation of DPO" style = "max-width: 70%; height: auto;" />
+
+</body>
+</html>

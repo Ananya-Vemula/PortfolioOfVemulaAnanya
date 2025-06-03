@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Notes on Knowledge Distillation of LLMs</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 2em;
+      line-height: 1.6;
+      background-color: #f9f9f9;
+    }
+    h1 {
+      color: #333;
+    }
+    ul {
+      list-style-type: square;
+    }
+    details {
+      background: #fff;
+      padding: 1em;
+      margin-bottom: 1em;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+    summary {
+      font-weight: bold;
+      font-size: 1.1em;
+      cursor: pointer;
+    }
+    p {
+      margin: 0.8em 0;
+    }
+  </style>
+</head>
+<body>
+  <h1>Notes: A Survey on Knowledge Distillation of Large Language Models</h1>
+
+  <p><strong>Source:</strong> 
+    <a href="https://arxiv.org/pdf/2402.13116" target="_blank">
+      A Survey on Knowledge Distillation of LLMs (arXiv:2402.13116)
+    </a>
+  </p>
+
+  <ul>
+    <li>
+      Knowledge Distillation (KD) techniques have become prominent for narrowing the performance gap between large, powerful LLMs and more accessible, open-source alternatives.
+    </li>
+    <li>
+      KD leverages the advanced capabilities of larger, high-performing teacher models to improve the performance of smaller student models.
+    </li>
+    <li>
+      <strong>Data Augmentation</strong> is a key strategy used to achieve effective knowledge distillation in the context of LLMs.
+    </li>
+    <li>
+      KD not only reduces computational overhead but also contributes to the environmental sustainability of AI development.
+    </li>
+    <li>
+      The distillation process relies heavily on <strong>heuristic and well-crafted prompts</strong> to extract specific knowledge or behaviors from teacher models.
+    </li>
+    <li>
+      Prompts provide a flexible and dynamic way to elicit knowledge, improving the efficiency and precision of the distillation process.
+    </li>
+    <li>
+      KD also focuses on transferring <strong>abstract qualities</strong> such as reasoning patterns and complex decision-making abilities from teacher to student.
+    </li>
+  </ul>
+
+  <title> Notes on Knowledge Distillation (KD) and Data Augmentation (DA)</title>
+   <details open>
+    <summary>Data Augmentation (DA)</summary>
+    <p>
+      Traditional techniques like <strong>paraphrasing</strong> and <strong>back-translation</strong> were used to mechanically expand datasets.
+    </p>
+    <p>
+      With the advent of <strong>Large Language Models (LLMs)</strong>, DA now generates <em>context-rich, domain-specific</em> training data.
+    </p>
+    <p>
+      DA serves as a <strong>force multiplier</strong> in KD, helping distilled models gain skills with less data and compute.
+    </p>
+    <p>
+      It enhances the <strong>qualitative transfer</strong> of knowledge, enabling learning that focuses on skill development over dataset size.
+    </p>
+  </details>
+
+  <details>
+    <summary>Knowledge Distillation (KD)</summary>
+    <p>
+      KD enables the transfer of knowledge from powerful <strong>teacher models</strong> (e.g., GPT-4) to <strong>student models</strong> (e.g., open-source LLMs).
+    </p>
+    <p>
+      It streamlines computational requirements and improves <strong>AI sustainability</strong>.
+    </p>
+    <p>
+      The process heavily uses <strong>prompts</strong> for eliciting and transferring knowledge, skills, and reasoning patterns.
+    </p>
+  </details>
+
+  <details>
+    <summary>Survey Scope Overview</summary>
+    <p>The survey categorizes KD into three major facets:</p>
+    <ul>
+      <li><strong>KD Algorithms</strong>: Core technical methods used for knowledge transfer.</li>
+      <li><strong>Skill Distillation</strong>: Enhancing capabilities like instruction-following and retrieval-augmented generation (RAG).</li>
+      <li><strong>Vertical Distillation</strong>: Domain-specific applications such as legal or healthcare LLMs.</li>
+    </ul>
+  </details>
+
+  <details>
+    <summary>KD Algorithms</summary>
+    <p>
+      These form the <strong>technical foundation</strong> for KD, focusing on transferring knowledge from proprietary teacher models to open-source student models.
+    </p>
+  </details>
+
+  <details>
+    <summary>Skill Distillation</summary>
+    <p>
+      Focuses on specific <strong>skills and capabilities</strong> gained through KD, such as:
+    </p>
+    <ul>
+      <li>Context understanding</li>
+      <li>Instruction following</li>
+      <li>Retrieval-Augmented Generation (RAG)</li>
+    </ul>
+  </details>
+
+  <details>
+    <summary>Vertical Distillation</summary>
+    <p>
+      Applies KD techniques across various <strong>vertical domains</strong>, customizing LLMs for areas like:
+    </p>
+    <ul>
+      <li>Law</li>
+      <li>Medical and Healthcare</li>
+      <li>Other specialized industries</li>
+    </ul>
+  </details>
+
+  <details>
+    <summary>Declaration</summary>
+    <p>
+      The survey aims to offer a <strong>comprehensive and insightful overview</strong> of knowledge distillation for LLMs, with a focus on:
+    </p>
+    <ul>
+      <li>Skill enhancement</li>
+      <li>Domain-specific applications</li>
+      <li>Effective use of data augmentation and prompting</li>
+    </ul>
+  </details>
+
+  <h1>Steps of Knowledge Distillation</h1>
+
+  <div class="step">
+    <h2>1. Target Skill or Domain Steering Teacher LLM</h2>
+    <p>
+      Begin by directing the teacher LLM towards a <strong>specific target skill or domain</strong>.
+      This ensures that the outputs generated are aligned with the desired area of expertise or use case.
+    </p>
+  </div>
+
+  <div class="step">
+    <h2>2. Seed Knowledge as Input</h2>
+    <p>
+      Provide <strong>seed knowledge</strong> – small, specific, and relevant pieces of data that help stimulate
+      the teacher model's understanding. This acts as a starting point or anchor for generating richer responses.
+    </p>
+    <p>
+      Seed knowledge boosts output quality by grounding it in meaningful, domain-specific context.
+    </p>
+  </div>
+
+  <div class="step">
+    <h2>3. Generation of Distillation Knowledge</h2>
+    <p>
+      The teacher LLM generates <strong>distilled knowledge</strong> using the seed inputs and the guided domain instruction.
+      The generated data often includes:
+    </p>
+    <ul>
+      <li>Q&A dialogues</li>
+      <li>Narrative or explanatory text</li>
+      <li>Task-oriented skill demonstrations</li>
+      <li>(Rarely) logits or internal features</li>
+    </ul>
+    <p>
+      These outputs are designed to reflect the teacher's depth of knowledge and are meant to train the student model effectively.
+    </p>
+  </div>
+
+  <div class="step">
+    <h2>4. Training the Student Model</h2>
+    <p>
+      Use the generated examples to <strong>train the student model</strong>, applying an appropriate
+      training loss function to meet the learning objectives.
+    </p>
+    <p>
+      This step involves transferring both <em>explicit content</em> and <em>abstract reasoning patterns</em>
+      from the teacher to the student, refining the student's capabilities in the target domain or skill area.
+    </p>
+  </div>
+
+  <img src = "imagesfornotes/DistillationCore.jpg", alt = "Core Idea of Distillation"/>
+
+  <title>Knowledge Distillation Techniques Overview</title>
+<style>
+  body {
+    font-family: 'Helvetica Neue', sans-serif;
+    background: #f9f9f9;
+    color: #333;
+    padding: 50px;
+    max-width: 1000px;
+    margin: auto;
+    line-height: 1.6;
+  }
+  h1, h2, h3 {
+    color: #004d40;
+  }
+  .section {
+    background: #ffffff;
+    padding: 25px;
+    border-radius: 10px;
+    margin-bottom: 30px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  }
+  ul {
+    margin-top: 10px;
+  }
+  li {
+    margin-bottom: 8px;
+  }
+  .highlight {
+    background: #e3f2fd;
+    padding: 5px 10px;
+    border-left: 4px solid #2196f3;
+    margin: 10px 0;
+  }
+</style>
+
+  <h1>Knowledge Distillation Techniques Overview</h1>
+
+  <div class="section">
+    <h2>Knowledge Distillation Algorithms</h2>
+    <ul>
+      <li><strong>Labeling:</strong> Teacher model outputs labels from input data.</li>
+      <li><strong>Expansion:</strong> Teacher generates in-context samples similar to demonstrations.</li>
+      <li><strong>Data Curation:</strong> Teacher creates data based on topics or metadata (e.g., entities).</li>
+      <li><strong>Feature Extraction:</strong> Internal representations like logits or features are extracted from the teacher.</li>
+      <li><strong>Feedback:</strong> Teacher evaluates student outputs—providing corrections, preferences, or challenges.</li>
+      <li><strong>Self-Knowledge:</strong> Student self-generates responses and filters high-quality outputs on its own.</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <h2>Distillation</h2>
+    <p>
+      Focuses on methodologies to effectively transfer elicited knowledge from teacher LLMs into student models.
+    </p>
+  </div>
+
+  <div class="section">
+    <h2>Supervised Fine-Tuning (SFT)</h2>
+    <p>
+      <strong>SeqKD (Sequence-level Knowledge Distillation)</strong> is a simple and effective SFT method.
+    </p>
+    <ul>
+      <li>Fine-tunes student by maximizing the likelihood of sequences generated by teacher LLMs.</li>
+      <li>Aligns student predictions closely with teacher outputs through supervised learning.</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <h2>Divergence and Similarity-Based Techniques</h2>
+
+    <h3>1. Minimizing Divergence</h3>
+    <p>
+      Aims to reduce divergence <code>D(P_teacher || P_student)</code> between the output distributions.
+    </p>
+    <div class="highlight">
+      <strong>KL Divergence (Kullback–Leibler Divergence):</strong> A common measure of how one probability distribution diverges from a second, expected distribution.
+    </div>
+    <ul>
+      <li>Helps quantify how much information is lost when student mimics teacher.</li>
+      <li>Lower divergence → better mimicry.</li>
+    </ul>
+
+    <h3>2. Enhancing Hidden State Similarity</h3>
+    <p>
+      Aligns internal features (hidden layers) of student with teacher using similarity functions.
+    </p>
+    <ul>
+      <li>Improves semantic and structural alignment of internal representations.</li>
+      <li>Tools like <strong>Task-Aware Layer-Wise Distillation (TED)</strong> are used to compare and align feature maps.</li>
+      <li>Less common but considered powerful for improving generalization and interpretability.</li>
+    </ul>
+  </div>
+  
+
+    <h1>Reinforcement Learning in Knowledge Distillation</h1>
+
+  <div class="section">
+    <h2>Distilled Reward Model Training</h2>
+    <ul>
+      <li>Trains the reward model to reflect teacher LLM preferences.</li>
+      <li>Creates a distinction between more and less preferable outputs.</li>
+      <li>Helps the student model learn value-aligned behaviors via teacher-driven evaluations.</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <h2>Reinforcement Learning Optimization</h2>
+    <ul>
+      <li>Uses RL algorithms like <strong>PPO</strong> (Proximal Policy Optimization) and <strong>DPO</strong> (Direct Preference Optimization).</li>
+      <li>Achieves high performance by aligning generation with preferred behaviors.</li>
+      <li>More computationally intensive compared to distilled reward models.</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <h2>Ranking Optimization (RO)</h2>
+    <ul>
+      <li>Provides a fixed, more efficient alternative to RL for preference learning.</li>
+      <li>Incorporates human feedback through ranking rather than dynamic exploration.</li>
+      <li>Two primary objectives:
+        <ul>
+          <li><strong>RRHF:</strong> Rank Responses to align with Human Feedback.</li>
+          <li><strong>PRO:</strong> Pairwise Ranking Optimization.</li>
+        </ul>
+      </li>
+      <li>Less computationally expensive while maintaining effectiveness in aligning responses.</li>
+    </ul>
+  </div>
+  <title>Skill Distillation</title>
+
+  <h1>Skill Distillation</h1>
+
+  <h2>Context Following</h2>
+
+  
+  <p>Instruction Following: Uses in-context learning of GPT-3 to increase seed pool, enhancing diversity of instructions. Includes Topic-Guided Instruction Generation.</p>
+
+  <p>Complex Instructions: Introduces complexity through multi-step evolution processes, increasing both task difficulty and topic diversity.</p>
+
+  <p>Human Instructions: Instructions generated from ChatGPT may mimic human style but often lack diversity and the reasoning depth of real human instructions.</p>
+
+  <p>System Instructions: Aims to help student models learn reasoning strategies and identify effective solution approaches per task.</p>
+
+  <p>High-Quality Instructions: Tools like UltraChat generate large-scale, textbook-quality instruction datasets using meta-information.</p>
+
+  <p>Improved Instructions: Improves both instruction and response content across complexity, quality, and diversity dimensions.</p>
+
+  <h2>Multi-turn Dialogue</h2>
+  <p>Focuses on maintaining context across multiple conversational turns, unlike single-instance communication.</p>
+
+  <h2>RAG Capability</h2>
+  <p>Combines ground-truth search results with retrieved passages. Relevance is labeled, and teacher responses are used to train students.</p>
+  <p>Models like KARD train reranker models to mimic the retriever’s scoring using KL divergence between Retriever(d|r) and Reranker(d|x).</p>
+
+  <h2>Alignment</h2>
+
+  <h3>Thinking Pattern</h3>
+  <p>Promotes diverse solution strategies via tuning processes like Reflection Tuning and Explanation Tuning. Models like Orca2 adopt task-specific reasoning strategies. DEBATunE encourages comment generation on controversial topics for better control.</p>
+
+  <h3>Preference</h3>
+  <p>RLAIF (Reinforcement Learning from AI Feedback) focuses on helpfulness and minimizing harm. Uses heuristics or trained preference models. Can surpass RLHF in some cases.</p>
+
+  <h3>Value</h3>
+  <p>Ensures the model adheres to the HHH framework: Helpful, Harmless, and Honest.</p>
+
+  <title>Agent and Knowledge Distillation</title>
+
+  <h1>Agent</h1>
+
+  <h2>Tool Using</h2>
+  <p>Agents can use external tools, such as Graph-ToolFormer, which helps LLMs reason over complex graph data using external APIs. This reduces hallucinations by generating accurate API input arguments.</p>
+  <p>Includes creation of instruction-following datasets through multi-modal prompts and Low Rank Adaptation. Uses a method called Iterative Self-instruction from Introspective Feedback (ISIF).</p>
+
+  <h2>Planning</h2>
+  <p>Tasks are broken into planning, grounding, and execution. Agents are trained with a unified data format and may include modules like API retriever, LLM finetuner, and demo selector.</p>
+  <p>Planning involves subgoal decomposition, imitation learning, and division of labor strategies.</p>
+
+  <h2>NLP Task Specialization</h2>
+
+  <h3>Natural Language Understanding (NLU)</h3>
+  <p>Includes AugGPT for rephrasing training samples using teacher LLMs, and TDG for subgroup discovery and data generation. Combines labeling, expansion, and curation methods.</p>
+
+  <h3>Natural Language Generation (NLG)</h3>
+  <p>Student LLMs are trained on generated datasets using self-knowledge. Involves seed generation of verbs/nouns, sentence formation, translation, and response distillation. A filtering step ensures quality.</p>
+
+  <h2>Information Retrieval</h2>
+
+  <h3>Query Rewriter</h3>
+  <p>Uses a two-stage distillation: teacher → professor → student. The Rewrite-Retrieve-Read framework prompts, rewrites queries, and uses retrieval-augmented reading for answer generation.</p>
+
+  <h3>Retriever and Reranker</h3>
+  <p>Retriever identifies top-k relevant texts. The reranker refines the order:</p>
+  <ul>
+    <li><strong>Positive Reranker:</strong> Generates a relevance score using query and single document.</li>
+    <li><strong>Listwise Reranker:</strong> Reorders a full list of retrieved documents based on relevance.</li>
+  </ul>
+
+  <h2>Recommendation Systems</h2>
+  <p>Utilizes narrative-driven recommendations (NDR) enhanced with knowledge of news summarization, user profiles, and personalization for better content-based systems.</p>
+
+  <h2>Text-Generation Evaluation</h2>
+  <p>LLMs are used to evaluate the quality of generated responses against instructions. Real-world user queries and their evaluations are collected from a teacher LLM. Self-training with reference pairs is used.</p>
+
+  <h2>Code</h2>
+  <p>Uses textbook-quality Python data and coding tasks. Personalized distillation involves refining student code using feedback from execution results. Includes code completion, commenting, and multi-task learning.</p>
+
+  <h2>Multi - Multimodality</h2>
+
+  <h3>Vision-Language</h3>
+    <p>Definition: Models that process multiple input types (e.g., images + text) instead of only text.</p>
+    <p>Benefit: can perform better in understanding context that involves different modalities.</p>
+
+
+  <h2>Vertical Distillation</h2>
+    <p>Definition: Focuses on compressing and transferring knowledge vertically from large teacher models to smaller students across different tasks or domains.</p>
+
+  <h2>Problems Left to Discuss</h2>
+  <ol>
+    <li>Data Selection: How much data is optimal? How to filter low-quality data?</li>
+    <li>Reducing Distillation Cost: Use of compression, quantization, pruning, low-rank approximations. What else?</li>
+    <li>Multi-Teacher Distillation: Is it feasible? What are the challenges?</li>
+    <li>Richer Knowledge Extraction: How to extract deeper knowledge from teachers?</li>
+    <li>Catastrophic Forgetting: How to prevent forgetting of old tasks during distillation?</li>
+    <li>Trustworthy Distillation: Ensuring reliability and faithfulness of distilled knowledge.</li>
+    <li>Self-Alignment: Can models improve alignment through self-evaluation, beyond teacher/human feedback?</li>
+  </ol>
+
+
+
+</body>
+</html>
