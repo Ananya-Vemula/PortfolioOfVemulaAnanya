@@ -324,7 +324,128 @@
 
   <img src = "imagesfornotes/FinalDPO.jpg" alt = "FinalEquation of DPO" style = "max-width: 70%; height: auto;" />
 
-  
+   <title>GRPO and PPO Notes</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      margin: 40px;
+      background-color: #f9f9f9;
+      color: #333;
+    }
 
+    h1, h2 {
+      color: #2c3e50;
+    }
+
+    code {
+      background-color: #eee;
+      padding: 2px 5px;
+      border-radius: 4px;
+    }
+
+    ul {
+      margin-left: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>GRPO vs PPO: Key Concepts</h1>
+
+  <h2>1. What is GRPO?</h2>
+  <p><strong>GRPO</strong> (Gradient-Regularized Policy Optimization) is designed to:</p>
+  <ul>
+    <li>Improve computational efficiency through mathematical reasoning.</li>
+    <li>Optimize memory usage by eliminating the need for a value model.</li>
+    <li>Sample multiple outputs per prompt and average their rewards to guide updates.</li>
+  </ul>
+
+  <h3>Steps in GRPO</h3>
+  <ol>
+    <li>Sample <code>n</code> completions from current policy for each prompt.</li>
+    <li>Evaluate each with a reward model → get <code>r₁, r₂, ..., rₙ</code>.</li>
+    <li>Compute average reward: 
+      <div class="formula">
+        R̄ = (1/n) × ∑ rᵢ
+      </div>
+    </li>
+    <li>Use policy gradient method to maximize expected reward while regularizing against a reference model.</li>
+  </ol>
+
+  <h2>2. Differences from PPO</h2>
+  <ul>
+    <li><strong>PPO</strong> uses a value model for reward estimation.</li>
+    <li><strong>GRPO</strong> eliminates the value model and uses averaged sampled rewards instead.</li>
+  </ul>
+
+  <h2>3. Techniques Used</h2>
+  <ul>
+    <li><strong>Regularization</strong>: Prevents over-optimization by penalizing large deviations from a reference policy.</li>
+    <li><strong>Instruction Fine-tuning</strong>: Trains models to follow instructions better.</li>
+    <li><strong>Rejection Sampling</strong>: Selects high-quality responses by discarding poor ones.</li>
+    <li><strong>Policy Gradient Algorithms</strong>: Core reinforcement learning method to update the policy.</li>
+  </ul>
+
+  <h2>4. Regularization using KL-Divergence</h2>
+  <p>KL regularization ensures the updated policy doesn’t diverge too much from the reference. The KL divergence is calculated as:</p>
+
+  <p><strong>KL(P || Q)</strong> = ∑ P(x) log [ P(x) / Q(x) ]</p>
+
+  <p>Where:</p>
+  <ul>
+    <li><code>P(x)</code> = new policy</li>
+    <li><code>Q(x)</code> = reference policy (e.g., initial supervised model)</li>
+  </ul>
+
+  <h1>Understanding Instruction Finetuning (IFT)</h1>
+
+  <h2>What is Instruction Finetuning (IFT)?</h2>
+  <p>Imagine you have a super smart student who knows a lot of general stuff, but they're not very good at following specific instructions yet. Instruction Finetuning is like giving that student a special training course where they learn to understand and follow instructions perfectly.</p>
+  <p>In the world of AI, IFT teaches a large language model (LLM) to be really good at understanding your "instructions" or "prompts" and giving you the kind of response you expect. It uses a specific way of organizing the information we give to the AI, like a script for a play.</p>
+
+  <h2>How Does IFT Work? (Chat Templates and Roles)</h2>
+  <p>Think of it like a conversation with different people involved. In IFT, every piece of information we give to the AI is assigned a "role." There are three main roles:</p>
+
+  <ul>
+    <li>
+      <p><strong class="role role-system">System:</strong> This is like setting the overall mood or rules for the AI. It's the prompt that tells the AI how to behave or what kind of personality it should have. It's often hidden from the user, but it's super important for guiding the AI's behavior.</p>
+      <div class="example-box">
+        <strong>Example:</strong> <span class="role-system">"You are a helpful and friendly assistant. Always provide concise answers."</span>
+      </div>
+    </li>
+    <li>
+      <p><strong class="role role-user">User:</strong> This is YOU! It's any message or question you send to the AI. This is where you give your instructions or ask for information.</p>
+      <div class="example-box">
+        <strong>Example:</strong> <span class="role-user">"Can you explain photosynthesis to me in simple terms?"</span>
+      </div>
+    </li>
+    <li>
+      <p><strong class="role role-assistant">Assistant:</strong> This is the AI's response back to you. It holds what the AI says or generates based on your instructions and the system's guidance.</p>
+      <div class="example-box">
+        <strong>Example:</strong> <span class="role-assistant">"Sure! Photosynthesis is how plants make their own food using sunlight, water, and carbon dioxide."</span>
+      </div>
+    </li>
+  </ul>
+
+  <p>These roles create a structured "chat template" where the AI learns how different parts of a conversation fit together. It's like teaching a child the difference between who asks a question, who gives an answer, and what the general rules of polite conversation are.</p>
+
+  <h2>Why is IFT Important? (Key Principles)</h2>
+  <p>There are a couple of big ideas that make IFT so powerful:</p>
+
+  <ol>
+    <li>
+      <p><strong>High-Quality Data is King:</strong> Imagine trying to teach someone to cook with bad recipes. They'll never learn! The same goes for AI. The better and more accurate the examples (the "data" in our notes) we give the AI during IFT, the better it will perform. If we show it lots of good instructions and good answers, it learns to give good answers itself.</p>
+    </li>
+    <li>
+      <p><strong>Lots of Practice Makes Perfect (~1 Million Prompts!):</strong> It takes a lot of practice for an AI to become truly amazing. We're talking about feeding it around <strong>1 million (that's 1,000,000!)</strong> different instructions or prompts during the IFT process. This massive amount of training helps the model become super capable, especially for something called <strong>RLHF (Reinforcement Learning from Human Feedback)</strong>, which is another advanced training technique that makes AI even better at being helpful and harmless.</p>
+    </li>
+  </ol>
+
+  <p>So, in simple terms, Instruction Finetuning is like a specialized training program that teaches AI models to understand and follow instructions by breaking down conversations into specific roles and practicing with a huge amount of high-quality examples. This is a big reason why today's AI can understand your questions and respond so intelligently!</p>
+
+  <p>Hopefully, this makes IFT a little clearer for you! Now you know a bit more about the magic behind those smart AI conversations.</p>
+
+  
 </body>
 </html>
