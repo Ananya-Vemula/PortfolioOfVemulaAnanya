@@ -443,9 +443,183 @@
   </ol>
 
   <p>So, in simple terms, Instruction Finetuning is like a specialized training program that teaches AI models to understand and follow instructions by breaking down conversations into specific roles and practicing with a huge amount of high-quality examples. This is a big reason why today's AI can understand your questions and respond so intelligently!</p>
-
-  <p>Hopefully, this makes IFT a little clearer for you! Now you know a bit more about the magic behind those smart AI conversations.</p>
-
+ 
   
+  <h1>Advanced AI Finetuning Techniques - A Noob's Guide</h1>
+
+  <h2>Rejection Sampling (RS)</h2>
+  <p>Imagine you're trying to pick the best apples from a huge orchard. You can't check every single one. Rejection Sampling is a clever way to find the "best" responses from an AI model without checking every single possible answer it could generate. It's a common and simple technique used to make AI models better at giving preferred answers.</p>
+
+  <h3>How it Works:</h3>
+  <ol>
+    <li>The AI model generates many different answers (let's call them "completions") for the same question or instruction.</li>
+    <li>A special "reward model" (another AI model trained to judge quality) evaluates each of these generated answers and gives them a "score" or "reward."</li>
+    <li>We then pick only the best-scoring answers to use for further training. This is like only keeping the juiciest, crunchiest apples you found.</li>
+    <li>Finally, we take these "top" answers and use them to finetune (further train) the original AI model, teaching it to generate more of these high-quality responses in the future.</li>
+  </ol>
+
+  <p>Many research papers use Rejection Sampling as a starting point or a comparison (a "baseline") because it's a straightforward way to improve an AI model's output based on quality.</p>
+
+  <h3>Different Ways to "Pick the Best" in Rejection Sampling:</h3>
+  <p>When we say "top completions," there are a few ways to decide what "top" means:</p>
+
+  <h4>1) Selecting Top-N Completions</h4>
+  <ul>
+    <li>This is like saying, "Give me the <strong>best N</strong> (e.g., top 10, top 100) answers from <strong>all the answers generated for all questions combined</strong>."</li>
+    <li>You collect all the possible answers the AI generated for a bunch of different questions, give them all a score with your reward model, and then just take the absolute top N answers overall, regardless of which specific question they came from.</li>
+    <li>This method prioritizes overall highest quality across the entire dataset.</li>
+  </ul>
+
+  <h4>2) Top Per Prompt</h4>
+  <ul>
+    <li>This method is more about fairness across different questions. For each question (or "prompt"), you generate several answers.</li>
+    <li>Then, for <span class="highlight">each individual question</span>, you pick the best answer that the AI generated specifically for that question.</li>
+    <li>So, if you asked 10 questions and generated 5 answers for each, you'd end up with 10 "best" answers (one for each question), even if some of them aren't as high-scoring as the absolute best answer from a different question.</li>
+    <div class="example-box">
+      <strong>Example:</strong>
+      <ul>
+        <li><strong>Prompt 1:</strong> "Tell me about dogs."
+          <ul>
+            <li>Answer A: "Dogs are fluffy." (Reward: 0.7)</li>
+            <li>Answer B: "Dogs are domesticated mammals." (Reward: 0.9) <-- Pick this one for Prompt 1</li>
+          </ul>
+        </li>
+        <li><strong>Prompt 2:</strong> "What is photosynthesis?"
+          <ul>
+            <li>Answer C: "It's how plants make food." (Reward: 0.8) <-- Pick this one for Prompt 2</li>
+            <li>Answer D: "Photosynthesis is a complex biochemical process..." (Reward: 0.6)</li>
+          </ul>
+        </li>
+      </ul>
+      In "Top Per Prompt," we'd pick Answer B for Prompt 1 and Answer C for Prompt 2.
+    </div>
+  </ul>
+
+  <h4>3) Top Overall Prompts (less common in simple RS, but related to data selection)</h4>
+  <ul>
+    <li>This isn't about picking top *completions* as much as it is about identifying the *prompts* that lead to the most valuable responses.</li>
+    <li>Sometimes, you might have certain questions or types of questions that are more important or lead to more interesting/complex answers.</li>
+    <li>You might use the reward model to evaluate all answers generated for a given prompt, and then decide to prioritize training on prompts that consistently generated high-quality answers, or perhaps prompts where the model struggled but then produced a good answer after several tries.</li>
+    <li>This is more about curating the <strong>input side</strong> of the data.</li>
+  </ul>
+
+  <h2>Policy Gradient Algorithms</h2>
+  <p>Alright, let's switch gears to another core concept in making AI smart: Policy Gradient algorithms. Imagine you're teaching a robot to walk. You don't tell it exactly where to place each foot (that's too much detail!). Instead, you set up a system where it tries different ways of walking, and if it moves forward and doesn't fall, it gets a "reward." Policy Gradient algorithms work similarly: they teach an AI agent to learn the best "strategy" or "policy" to maximize its rewards over time.</p>
+
+  <h3>What is a "Policy" in AI?</h3>
+  <p>In Reinforcement Learning (RL), the "policy" is the AI agent's strategy. It's like a brain that tells the agent what action to take in any given situation (or "state"). For example, in a game, the policy might tell the AI: "If the enemy is here, move left."</p>
+  <p>Policy Gradient methods directly optimize this policy. Instead of trying to figure out the "value" of every single action in every single situation (which can be impossible in complex scenarios), they adjust the policy itself to make it more likely to choose actions that lead to higher rewards.</p>
+
+  <h3>The Core Idea: Learning by "Trial and Error" with a Compass</h3>
+  <ol>
+    <li><strong>Trial:</strong> The AI agent tries out actions based on its current policy in an environment (e.g., the robot tries a step).</li>
+    <li><strong>Error (or Success!):</strong> It receives a reward based on whether those actions were good or bad (e.g., positive reward for moving forward, negative for falling).</li>
+    <li><strong>Compass (Gradient):</strong> Policy Gradient algorithms calculate a "gradient." Think of this as a compass that points in the direction of "more rewards."</li>
+    <li><strong>Adjustment:</strong> The AI adjusts its policy slightly in the direction the compass points. This makes it more likely to repeat actions that led to good rewards and less likely to repeat actions that led to bad ones. This adjustment is called <span class="highlight">gradient ascent</span>, because we're trying to increase (ascend) the total reward.</li>
+  </ol>
+
+  <h3>Why are Policy Gradients Important?</h3>
+  <ul>
+    <li><strong>Direct Policy Optimization:</strong> Unlike other methods that try to estimate the value of actions first, Policy Gradients directly improve the action-choosing strategy. This is useful for complex problems where figuring out exact "values" is too hard.</li>
+    <li><strong>Handles Continuous Actions:</strong> Imagine controlling a robot arm where you can set the joint angle to any value (not just "bend" or "straighten"). Policy Gradients can handle these "continuous" actions much better than methods that need to list every single possible action.</li>
+    <li><strong>Stochastic Policies:</strong> Policy Gradient methods can learn "stochastic" policies, meaning they output probabilities for actions. This allows the AI to explore different actions even if they aren't immediately the "best" choice, which helps it find better long-term solutions and avoid getting stuck in a "local optimum" (a good but not perfect solution).</li>
+    <li><strong>Foundation for RLHF:</strong> Policy Gradients are a fundamental building block for advanced techniques like Reinforcement Learning from Human Feedback (RLHF), which is used to align powerful language models (like the one you're interacting with) with human preferences and safety guidelines.</li>
+  </ul>
+
+  <h3>Key Algorithms (Examples):</h3>
+  <ul>
+    <li><strong>REINFORCE:</strong> A foundational policy gradient algorithm that uses complete sequences of actions and rewards (called "trajectories" or "episodes") to calculate the gradient. It's like reviewing an entire game to see what moves led to winning.</li>
+    <li><strong>Actor-Critic Methods:</strong> These are more advanced and combine two parts: an "Actor" (the policy that decides what actions to take) and a "Critic" (which evaluates how good those actions were, helping to guide the Actor's learning more efficiently).</li>
+    <li><strong>Proximal Policy Optimization (PPO):</strong> A very popular and robust policy gradient algorithm known for its stability and good performance. It's often used in large-scale AI training.</li>
+  </ul>
+
+  <p>In short, Policy Gradient algorithms are a powerful family of methods that directly teach AI agents to learn optimal strategies by trying things out, getting feedback (rewards), and adjusting their behavior towards higher rewards, making them excellent for a wide range of complex tasks from robotics to playing games and generating human-like text.</p>
+
+    <h1>Direct Alignment Algorithms and RLVR in RLHF</h1>
+
+  <p>When we talk about making AI models, especially large language models (LLMs), helpful and aligned with what humans want, we often refer to **Reinforcement Learning from Human Feedback (RLHF)**. Traditionally, RLHF involves a few key steps:</p>
+  <ol>
+    <li>You start with a powerful language model that can generate text.</li>
+    <li>You collect data where humans rank or compare different outputs from the model.</li>
+    <li>You train a separate AI model, called a **"reward model,"** to learn these human preferences. This reward model then gives scores to new responses.</li>
+    <li>Finally, you use a Reinforcement Learning (RL) algorithm (like PPO, which we discussed earlier) to finetune the original language model, teaching it to generate text that gets high scores from the reward model.</li>
+  </ol>
+  <p>Now, let's explore some newer ways to achieve this alignment that simplify or change this traditional pipeline.</p>
+
+  ---
+
+  <h2>Direct Alignment Algorithms</h2>
+  <p><strong>Direct Alignment Algorithms</strong> are a more streamlined approach to RLHF. Their goal is to update an AI model to achieve the same alignment objective as traditional RLHF, but **without ever having to train an intermediate reward model or use complex RL optimizers.**</p>
+
+  <h3>Why are they "Direct"?</h3>
+  <ul>
+    <li>They **don't train a separate reward model**: Instead of training a dedicated AI to score responses, these algorithms directly use human preference data (e.g., "this response is better than that one") to update the main language model.</li>
+    <li>They **don't rely on complex RL optimizers**: Traditional RL algorithms like PPO can be quite challenging to implement and tune. Direct alignment methods often convert the preference learning problem into a simpler optimization task that can be solved with more standard neural network training techniques (like those used in supervised learning).</li>
+  </ul>
+
+  <h3>Example: DPO (Direct Preference Optimization)</h3>
+  <p><strong>DPO</strong> is a leading and very popular example of a direct alignment algorithm. Here's a simplified idea of how it works:</p>
+  <ol>
+    <li>You need a dataset of **"preferred" and "rejected" response pairs**. This data is typically created by showing humans different outputs from an AI model for the same prompt and asking them to choose which one they prefer.</li>
+    <li>DPO then trains the language model to **increase the probability of generating the "preferred" response** and **decrease the probability of generating the "rejected" response** for any given prompt.</li>
+    <li>The clever part is that DPO rephrases the entire RLHF objective (maximizing a reward based on preferences) into a simple, single-stage loss function that can be optimized using basic gradient descent, much like how you'd train a model for classification. This avoids the separate reward model and the complexities of RL.</li>
+  </ol>
+  <div class="example-box">
+    <strong>DPO in Action (Simplified):</strong>
+    <ul>
+      <li><strong>Prompt:</strong> "Write a short poem about stars."</li>
+      <li><strong>Preferred Response ($Y_W$ - "Winner"):</strong> "Twinkling diamonds, shy and bright, / Jewels scattered through the night."</li>
+      <li><strong>Rejected Response ($Y_L$ - "Loser"):</strong> "Stars are really hot. They are far away."</li>
+    </ul>
+    DPO adjusts the model's parameters so that, given the prompt, it's more likely to produce the poem and less likely to produce the factual but unpoetic sentence.
+  </div>
+
+  <h3>Advantages of Direct Alignment Algorithms:</h3>
+  <ul>
+    <li><strong>Simplicity:</strong> They're generally easier to implement and train than the multi-stage RLHF pipeline.</li>
+    <li><strong>Stability:</strong> Often more stable during training because they avoid some of the complexities and hyperparameters of RL.</li>
+    <li><strong>Efficiency:</strong> Can be more computationally efficient since you don't need to train and maintain a separate reward model.</li>
+    <li><strong>Strong Performance:</strong> Despite their simplicity, DPO and similar methods often achieve comparable or even better performance than traditional RLHF on various alignment tasks.</li>
+  </ul>
+
+  ---
+
+  <h2>RLVR: Reinforcement Learning with Verifiable Rewards</h2>
+  <p>While Direct Alignment Algorithms aim for simplicity in the RLHF pipeline, **RLVR (Reinforcement Learning with Verifiable Rewards)** takes a different approach to the **"reward"** part of RLHF. Traditional RLHF relies on **subjective human preferences** to train a reward model. This can be costly, slow, and sometimes inconsistent due to human bias or disagreement.</p>
+
+  <p>RLVR offers an alternative: instead of relying on human preferences and training a subjective reward model, it uses **objective, verifiable feedback** for its rewards. This means the feedback is either definitively "correct" or "wrong," based on external tools or predefined rules, not human opinion.</p>
+
+  <h3>How it Works:</h3>
+  <p>In RLVR, the reward signal for the AI model comes from automatic, external sources:</p>
+  <ul>
+    <li><strong>Verifiers:</strong> These are specialized tools or programs that can check the correctness of an AI's output automatically.
+      <ul>
+        <li><strong>Example 1 (Math):</strong> If an LLM is asked to solve a math problem (e.g., "$2 + 2 = ?$"), a **mathematical solver** can verify if the generated answer ("4") is indeed correct. The AI gets a positive reward for "4" and a zero/negative reward for "5".</li>
+        <li><strong>Example 2 (Code):</strong> If an LLM generates code, a **compiler or test suite** can verify if the code compiles and runs successfully, or if it passes specific test cases.</li>
+      </ul>
+    </li>
+    <li><strong>Rule-Based Tools:</strong> Pre-defined, unambiguous rules that determine if an output meets certain criteria.
+      <ul>
+        <li><strong>Example:</strong> "Does the generated response contain specific keywords?"</li>
+        <li><strong>Example:</strong> "Is the generated text within a certain character limit?"</li>
+      </ul>
+    </li>
+  </ul>
+  <p>This "correct" or "wrong" feedback (often a simple binary 1 or 0) is then used as the reward signal for a standard reinforcement learning algorithm to train the language model.</p>
+
+  <h3>Key Differences and Advantages of RLVR:</h3>
+  <ul>
+    <li><strong>Objective Rewards:</strong> The rewards are based on facts or rules, making them highly consistent and reliable, unlike subjective human judgments.</li>
+    <li><strong>Scalability:</strong> Automating the reward generation process makes training much faster and cheaper, reducing the need for extensive human annotation.</li>
+    <li><strong>Specificity:</strong> RLVR excels in tasks where correctness can be precisely defined and automatically checked, such as scientific reasoning, coding, or logical problem-solving.</li>
+    <li><strong>Reduced Human Bias:</strong> By removing direct human judgment from the reward signal, RLVR can potentially reduce certain biases that might be present in human-preferred datasets.</li>
+  </ul>
+
+  <h3>When is RLVR Most Useful?</h3>
+  <p>RLVR is particularly powerful for tasks where there's a clear, objective right or wrong answer. For example, if you want your LLM to be excellent at coding, solving equations, or generating factually accurate data that can be programmatically verified, RLVR is a strong candidate. However, for tasks that require creativity, nuance, or subjective style (like writing a compelling story or having a friendly conversation), human feedback is still essential, and traditional RLHF or direct alignment algorithms might be more suitable.</p>
+
+  <p>Both direct alignment algorithms and RLVR are pushing the boundaries of how we train and align AI models, each offering unique benefits for different alignment challenges.</p>
+
+
 </body>
 </html>
