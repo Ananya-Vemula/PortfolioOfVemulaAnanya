@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Agent and Prompting Concepts</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            margin: 20px;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 900px;
+            margin: auto;
+            background: #fff;
+            padding: 20px 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1, h2, h3 {
+            color: #2c3e50;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 5px;
+            margin-top: 25px;
+        }
+        h2 {
+            font-size: 1.8em;
+        }
+        h3 {
+            font-size: 1.4em;
+        }
+        ul {
+            list-style-type: disc;
+            margin-left: 20px;
+        }
+        ul ul {
+            list-style-type: circle;
+            margin-left: 30px;
+        }
+        strong {
+            color: #34495e;
+        }
+        p {
+            margin-bottom: 10px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+            vertical-align: top;
+        }
+        th {
+            background-color: #f2f2f2;
+            color: #333;
+            font-weight: bold;
+        }
+        code {
+            background-color: #eef;
+            padding: 2px 4px;
+            border-radius: 4px;
+            font-family: 'Courier New', Courier, monospace;
+        }
+        .qa {
+            background-color: #e8f0f8;
+            border-left: 4px solid #3498db;
+            padding: 15px;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+        }
+        .qa strong {
+            color: #3498db;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Understanding AI Agents and Prompting</h1>
+
+        <h2>AI Agents vs. Zero-Shot Prompts</h2>
+        <p><strong>Zero-shot prompts are not AI agents.</strong> This distinction lies in the workflow and adaptive capabilities.</p>
+        <ul>
+            <li><strong>Non-agentic workflow:</strong>
+                <ul>
+                    <li>Has a clear start and a definitive finish.</li>
+                    <li>Involves no adjustments or refinements based on intermediate results. The model generates an output and stops.</li>
+                </ul>
+            </li>
+            <li><strong>Agentic workflow:</strong>
+                <ul>
+                    <li>Revises and rethinks its approach as it learns to get to the final answer.</li>
+                    <li>Iterates based on human guidance and feedback.</li>
+                </ul>
+            </li>
+            <li><strong>Truly autonomous AI agent:</strong>
+                <ul>
+                    <li>Determines its own steps, utilizes tools, and iterates without direct human involvement.</li>
+                    <li>Automatically adjusts its workflow to achieve the best outcome.</li>
+                </ul>
+            </li>
+        </ul>
+
+        <h2>Agentic Design Patterns</h2>
+        <p>These patterns describe how AI agents are structured to perform tasks more effectively:</p>
+        <ul>
+            <li><strong>Reflection:</strong> The ability of an agent to critically evaluate its own outputs and refine its approach.</li>
+            <li><strong>Tool Use:</strong> The capacity to leverage APIs and other external tools (e.g., access to websites, GitHub, code interpreters, email, calendars) to enhance and refine answers.</li>
+            <li><strong>Planning and Reasoning:</strong> The process of breaking down a task into necessary steps and sequencing them logically.</li>
+            <li><strong>Multi-agent Systems:</strong> Involves multiple Large Language Models (LLMs) working together, each often with different roles or responsibilities. This approach can lead to error reduction as agents validate each other's outputs.</li>
+        </ul>
+
+        <h3>Types of AI Agent Systems:</h3>
+        <ul>
+            <li><strong>Single AI Agent:</strong> Takes a task, uses tools (if enabled), and provides an answer.</li>
+            <li><strong>Simplest Multi-AI Agent (Crew):</strong>
+                <ul>
+                    <li>Uses multiple agents which may have their own distinct tasks and/or specific tools.</li>
+                    <li>These agents collaborate to solve a larger task.</li>
+                    <li>Specific tasks within the crew can have dedicated tools.</li>
+                </ul>
+            </li>
+        </ul>
+
+        <h3>Multi-Agent Design Patterns:</h3>
+        <ul>
+            <li><strong>Sequential:</strong> One agent completes a task, then passes its output to the next agent, and this process repeats.</li>
+            <li><strong>Hierarchical:</strong> A manager agent supervises two or more sub-agents. The sub-agents perform their tasks, and the manager compiles their results.</li>
+            <li><strong>Hybrid System:</strong> Combines multiple sequential and hierarchical patterns, along with other patterns.</li>
+            <li><strong>Parallel Design Systems:</strong> Agents handle tasks concurrently to finish them quicker.</li>
+            <li><strong>Asynchronous System:</strong> Handles tasks on its own time without a set sequence, making it better for uncertain conditions. Best suited for real-time monitoring.</li>
+        </ul>
+        <p>Mixing these systems can create what is called a "flow" (though caution should be exercised to avoid over-complication).</p>
+
+        <div class="qa">
+        <h2>Comparison: Using API to Call Another Model vs. Multi-Agent Systems</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Aspect</th>
+                    <th>Using API to Call Another Model</th>
+                    <th>Multi-Agent System</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Control</strong></td>
+                    <td>Still **centralized** (e.g., a primary LLM like GPT controls the API call).</td>
+                    <td>**Decentralized** (agents make independent decisions and negotiate).</td>
+                </tr>
+                <tr>
+                    <td><strong>Initiative</strong></td>
+                    <td>Only the primary LLM (e.g., GPT) decides when to call other models or tools.</td>
+                    <td>**Any agent** within the system may decide to act or communicate based on its role or current state.</td>
+                </tr>
+                <tr>
+                    <td><strong>Coordination</strong></td>
+                    <td>**One-shot usage** for specific functions. The primary LLM orchestrates individual calls.</td>
+                    <td>**Ongoing coordination**, task delegation, and negotiation among multiple agents.</td>
+                </tr>
+                <tr>
+                    <td><strong>Communication</strong></td>
+                    <td>Simple **input → output** exchange with the called model/tool.</td>
+                    <td>Agents hold **state, memory, and defined roles**, leading to richer, more complex communication patterns.</td>
+                </tr>
+                <tr>
+                    <td><strong>Example</strong></td>
+                    <td>**GPT** (primary LLM) → **calls an image-generation model** to create an image.</td>
+                    <td>**DesignerAgent** ↔ **VisionAgent** ↔ **CriticAgent** (multiple agents interacting to achieve a design goal).</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="container">
+        <h2>Key AI Concepts</h2>
+        <p>Here's a breakdown of fundamental terms in AI, specifically related to large language models and agentic systems.</p>
+
+        <div class="concept-block">
+            <h3>🧠 1. Model</h3>
+            <ul>
+                <li><strong>Definition:</strong> A neural network trained on data to map inputs to outputs (like text → text, image → caption, etc.).</li>
+                <li><strong>Purpose:</strong> To make predictions, generate content, classify data, and perform various learned tasks.</li>
+                <li><strong>Examples:</strong> GPT-4, LLaMA 3, DALL·E 3, Whisper, BERT, Stable Diffusion.</li>
+                <li><strong>Nature:</strong> Passive (it responds to queries), stateless unless explicitly managed by an agent.</li>
+                <li><strong>Can Be Used As:</strong> A standalone component or embedded within a tool or an agent.</li>
+            </ul>
+        </div>
+
+        <div class="concept-block">
+            <h3>🤖 2. Agent</h3>
+            <ul>
+                <li><strong>Definition:</strong> A system that uses models (and potentially tools), has goals, memory, reasoning capabilities, and can decide what to do next.</li>
+                <li><strong>Purpose:</strong> To take actions, solve tasks autonomously or collaboratively, and iterate towards a goal.</li>
+                <li><strong>Examples:</strong> AutoGPT, CrewAI agents (e.g., a Planner, a Researcher), ChatGPT with memory and tool-use capabilities.</li>
+                <li><strong>Nature:</strong> Active, stateful, and goal-driven.</li>
+                <li><strong>Uses:</strong> Models (to "think" or generate), Tools (to "act" or extend capabilities), and Modality-specific capabilities.</li>
+            </ul>
+        </div>
+
+        <div class="concept-block">
+            <h3>🔧 3. Tool</h3>
+            <ul>
+                <li><strong>Definition:</strong> An external function or service an agent or model can call to perform a task it cannot do internally or to access external information.</li>
+                <li><strong>Purpose:</strong> To extend the capabilities of a model or agent (e.g., performing complex math, generating images, accessing databases, Browse the web).</li>
+                <li><strong>Examples:</strong> Python interpreter, web browser, calculator, DALL·E API, weather API.</li>
+                <li><strong>Nature:</strong> Passive and task-specific (like a function or an API endpoint).</li>
+                <li><strong>Used By:</strong> Agents or models with tool-use capability (e.g., GPT-4o when prompted to use external resources).</li>
+            </ul>
+        </div>
+
+        <div class="concept-block">
+            <h3>🖼️ 4. Modality</h3>
+            <ul>
+                <li><strong>Definition:</strong> A type of input/output data.</li>
+                <li><strong>Purpose:</strong> Defines what kind of information an AI system can process or generate.</li>
+                <li><strong>Examples:</strong> Text, Image, Audio, Video, 3D data. "Multimodal" refers to systems that handle multiple types (e.g., text+image).</li>
+                <li><strong>Used In:</strong> Models (especially multimodal ones like GPT-4o or Gemini) and tools (which might input/output specific modalities).</li>
+                <li><strong>Not a Component:</strong> It's a data type, not a system, agent, model, or tool itself.</li>
+            </ul>
+        </div>
+
+        <div class="concept-block">
+            <h3>🧑‍🔬 5. Expert</h3>
+            <ul>
+                <li><strong>Definition:</strong> A model or component highly specialized in a particular domain or task.</li>
+                <li><strong>Purpose:</strong> To handle specific kinds of reasoning or data more effectively than a general-purpose model, often by having focused training or architecture.</li>
+                <li><strong>Examples:</strong> Code expert (like Code Llama), Math expert (a specialized component within a larger model, sometimes seen as a "head" in architectures like Toolformer), Vision expert (like SAM for segmentation).</li>
+                <li><strong>Nature:</strong> Can be a fine-tuned model or a sub-module within a larger system.</li>
+                <li><strong>Used In:</strong> Mixture of Experts (MoE) architectures, Toolformer-like systems, and Agentic systems with role division where different agents might be experts in specific areas.</li>
+            </ul>
+        </div>
+
+        <hr>
+
+        <h2>🔄 Side-by-Side Comparison</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Concept</th>
+                    <th>What it is</th>
+                    <th>Active or Passive</th>
+                    <th>Handles Tasks?</th>
+                    <th>Learns?</th>
+                    <th>Commonly Interacts With</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Model</strong></td>
+                    <td>Trained neural network</td>
+                    <td>Passive</td>
+                    <td>No (without external prompting or agent control)</td>
+                    <td>Yes (during training phase)</td>
+                    <td>Agents, tools (when called by them), APIs</td>
+                </tr>
+                <tr>
+                    <td><strong>Agent</strong></td>
+                    <td>Goal-oriented decision-maker</td>
+                    <td>Active</td>
+                    <td>Yes</td>
+                    <td>Sometimes (if it has adaptive mechanisms or memory, e.g., via reinforcement learning or ongoing interaction)</td>
+                    <td>Models, tools, other agents</td>
+                </tr>
+                <tr>
+                    <td><strong>Tool</strong></td>
+                    <td>External function/service/API</td>
+                    <td>Passive</td>
+                    <td>Yes (when called by a model or agent)</td>
+                    <td>No</td>
+                    <td>Models, agents</td>
+                </tr>
+                <tr>
+                    <td><strong>Modality</strong></td>
+                    <td>Type of input/output data (text, image, etc.)</td>
+                    <td>N/A (it's a characteristic)</td>
+                    <td>N/A</td>
+                    <td>N/A</td>
+                    <td>Models (multimodal capabilities), tools, agents (as the data they process/generate)</td>
+                </tr>
+                <tr>
+                    <td><strong>Expert</strong></td>
+                    <td>Specialized sub-model or module</td>
+                    <td>Passive (as a module) or Active (if a specialized agent)</td>
+                    <td>Yes (in its niche domain)</td>
+                    <td>Yes (during its specialized training/fine-tuning)</td>
+                    <td>Agents, larger models (as components within them)</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+  
+
+
+        <h2>Prompt Engineering Course (Google) - Key Concepts</h2>
+        <ul>
+            <li><strong>Prompting:</strong> The process of providing specific instructions to an LLM or any AI tool to receive new information or to achieve a desired outcome on a task.</li>
+            <li><strong>5-Step Process:</strong>
+                <ol>
+                    <li><strong>Task:</strong> Clearly define what you want the AI to do.</li>
+                    <li><strong>Context:</strong> Provide as much relevant information as possible for better results.</li>
+                    <li><strong>References:</strong> Offer specific examples or data points to make the task specific and guide the model.</li>
+                    <li><strong>Evaluate:</strong> If the initial result isn't what you wanted, assess what went wrong.</li>
+                    <li><strong>Iterate:</strong> Refine and revise your prompt multiple times until you achieve the desired outcome.</li>
+                </ol>
+            </li>
+            <li><strong>Hallucinations:</strong> When an AI model provides outputs that are inconsistent, incorrect, or nonsensical relative to reality or the provided context.</li>
+            <li><strong>Biases:</strong> Occur because AI systems are often trained on human-written content, which can inadvertently contain and perpetuate biases in terms of gender, race, and other characteristics.</li>
+        </ul>
+
+        <h3>Prompting Techniques:</h3>
+        <ul>
+            <li><strong>Prompt Chaining:</strong> Guides GenAI tools through a series of interconnected prompts, adding new layers of complexity or refinement along the way.</li>
+            <li><strong>Chain of Thought (CoT) Prompting:</strong> Asks the AI to explain its reasoning as a step-by-step process. This helps the model to break down complex problems and improve accuracy.</li>
+            <li><strong>Tree of Thought Prompting:</strong> An extension of CoT prompting that explores multiple reasoning paths asynchronously, allowing the model to backtrack and explore alternatives, similar to a tree structure.</li>
+            <li><strong>Agent Sim (Agent Simulation):</strong> A prompting technique where the AI is instructed to simulate an agent, conducting interviews or engaging in role-playing scenarios.</li>
+        </ul>
+
+        <h2>Meta AI Models</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Model Name</th>
+                    <th>Release</th>
+                    <th>How It Was Made</th>
+                    <th>Key Features</th>
+                    <th>Best For</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>**Llama 3 (8B, 70B, 400B)**</td>
+                    <td>2024</td>
+                    <td>Open-source, pre-trained on over 15T tokens, a mix of publicly available online data. Fine-tuned with instruction tuning (Llama-3-Instruct).</td>
+                    <td>State-of-the-art open models, strong reasoning, coding, and multilingual capabilities. Available in various sizes, highly performant and competitive with proprietary models.</td>
+                    <td>Foundation for custom applications, open-source AI development, advanced research, text generation, code generation, chatbots, large-scale deployments.</td>
+                </tr>
+                <tr>
+                    <td>**Code Llama**</td>
+                    <td>2023</td>
+                    <td>Fine-tuned version of Llama 2 specifically on code-centric datasets. Includes specialized versions (Python, Instruct, Infills).</td>
+                    <td>Code generation and completion, supports various programming languages, strong code reasoning, fills in missing code.</td>
+                    <td>Software development, code assistance, automating coding tasks, educational coding tools.</td>
+                </tr>
+                <tr>
+                    <td>**Llama 2 (7B, 13B, 70B)**</td>
+                    <td>2023</td>
+                    <td>Open-source, pre-trained transformer models, successor to Llama 1. Trained on 40% more data than Llama 1. Instruction-tuned versions available.</td>
+                    <td>Competitive performance, good for general-purpose language tasks, code, and reasoning. Emphasis on responsible deployment.</td>
+                    <td>Foundation for open-source LLM applications, research, chatbots, summarization, text generation.</td>
+                </tr>
+                <tr>
+                    <td>**SeamlessM4T**</td>
+                    <td>2023</td>
+                    <td>Multimodal and multilingual AI model for text-to-speech, speech-to-text, text-to-text translation, and speech-to-speech translation.</td>
+                    <td>Supports nearly 100 languages for text input/output, and 35 languages for speech-to-speech/text translation. Low latency.</td>
+                    <td>Real-time communication, multilingual chatbots, translation services, accessibility tools.</td>
+                </tr>
+                <tr>
+                    <td>**DINOv2**</td>
+                    <td>2023</td>
+                    <td>Self-supervised vision transformer for dense prediction tasks, learning features without explicit labels.</td>
+                    <td>High-quality visual features, robust to various datasets, good for zero-shot image classification and semantic segmentation.</td>
+                    <td>Computer vision research, image analysis, object detection, foundation for visual AI systems.</td>
+                </tr>
+                <tr>
+                    <td>**Segment Anything Model (SAM)**</td>
+                    <td>2023</td>
+                    <td>Trained on a massive dataset of 11M images and 1.1B masks, designed for zero-shot generalization.</td>
+                    <td>Prompts an image and segments any object within it, even unseen objects or categories. Highly versatile.</td>
+                    <td>Image editing, computer vision research, medical imaging, robotics, augmented reality.</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>Microsoft AI Models (and key collaborations)</h2>
+        Microsoft often leverages its partnership with OpenAI, integrating their models into its products, while also developing its own specialized models and tools.
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Model Name</th>
+                    <th>Release</th>
+                    <th>How It Was Made</th>
+                    <th>Key Features</th>
+                    <th>Best For</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>**Microsoft Copilot**</td>
+                    <td>2023 (Commercial)</td>
+                    <td>Built on OpenAI's GPT-4 (and newer models like GPT-4o), integrated deeply with Microsoft Graph and Microsoft 365 apps (Word, Excel, PowerPoint, Outlook, Teams).</td>
+                    <td>Acts as a "Copilot" for productivity tasks across Microsoft 365. Contextual understanding from your enterprise data (emails, docs, meetings). Generates text, summarizes, analyzes data, creates presentations, drafts emails.</td>
+                    <td>Enterprise productivity, document creation, data analysis, meeting summarization, email drafting, enhancing workflow efficiency within Microsoft 365.</td>
+                </tr>
+                <tr>
+                    <td>**Phi-3 family (Phi-3-mini, Phi-3-small, Phi-3-medium)**</td>
+                    <td>2024</td>
+                    <td>Small, high-performing LLMs trained on filtered web data and synthetic data, often with a "textbook-quality" dataset.</td>
+                    <td>Compact size (e.g., 3.8B parameters for mini), strong reasoning given their size, efficient for edge devices, cost-effective. Designed for specific tasks rather than broad general intelligence.</td>
+                    <td>On-device AI, mobile applications, resource-constrained environments, targeted enterprise applications, research on smaller, more efficient LLMs.</td>
+                </tr>
+                <tr>
+                    <td>**Code Llama / Orca 2**</td>
+                    <td>2023</td>
+                    <td>Microsoft has contributed to and utilized Code Llama. Orca 2 is a separate model developed by Microsoft Research. It was fine-tuned on synthetic data to mimic reasoning processes.</td>
+                    <td>Orca 2 focuses on teaching smaller models to "reason" and "think step-by-step" rather than just imitate. Good for complex reasoning despite smaller size.</td>
+                    <td>Complex reasoning tasks, research into effective training of smaller models, educational purposes, scenarios where larger models are too resource-intensive.</td>
+                </tr>
+                <tr>
+                    <td>**Azure OpenAI Service**</td>
+                    <td>2023 onwards</td>
+                    <td>Provides access to OpenAI's models (GPT-3.5, GPT-4, DALL-E, Whisper) through Azure's infrastructure.</td>
+                    <td>Enterprise-grade security, compliance, and scalability for deploying OpenAI models. Enables fine-tuning of models with proprietary data.</td>
+                    <td>Building custom AI applications with OpenAI models for businesses, secure deployment of large language models, leveraging Azure's cloud capabilities.</td>
+                </tr>
+                <tr>
+                    <td>**Bing Chat (now Microsoft Copilot)**</td>
+                    <td>2023 onwards</td>
+                    <td>Integrates OpenAI's GPT-4 with Microsoft's Bing search index and other proprietary data.</td>
+                    <td>Conversational AI with internet access, able to answer complex questions, generate content, and summarize web pages with up-to-date information.</td>
+                    <td>Web search enhancement, content generation, information retrieval, quick answers to current events.</td>
+                </tr>
+                <tr>
+                    <td>**Valle-E / VALL-E X**</td>
+                    <td>2023 / 2024</td>
+                    <td>Neural codec language models for text-to-speech synthesis, learning from audio data. VALL-E X is multilingual.</td>
+                    <td>Can synthesize speech in a voice with just a 3-second audio prompt. Preserves speaker's emotion and acoustic environment. Multilingual capabilities.</td>
+                    <td>Voice cloning (with ethical considerations), personalized voice assistants, content creation (podcasts, audiobooks), accessibility for speech synthesis.</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="container">
+        <h2><span class="check-icon">✅</span> Google AI Models</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Model Name</th>
+                    <th>Release</th>
+                    <th>How It Was Made</th>
+                    <th>Key Features</th>
+                    <th>Best For</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Gemini 2.5 Pro</strong></td>
+                    <td>2025 (Preview)</td>
+                    <td>Multimodal transformer, trained from scratch on vast and diverse datasets (text, code, audio, images, video) with extensive compute (TPUs). Focus on enhanced reasoning and "thinking" capabilities.</td>
+                    <td>Most capable model, multimodal understanding, complex reasoning (code, math, STEM), long context window (up to 1M tokens), native audio/video processing, advanced coding, Deep Think mode (exposing reasoning process).</td>
+                    <td>Highly complex tasks, advanced reasoning, multimodal understanding, analyzing large datasets/codebases, in-depth problem-solving, advanced coding.</td>
+                </tr>
+                <tr>
+                    <td><strong>Gemini 2.5 Flash</strong></td>
+                    <td>2025 (Preview)</td>
+                    <td>Optimized version of Gemini 2.5 Pro for speed and efficiency.</td>
+                    <td>Fast and cost-efficient, still highly capable, multimodal, long context window (up to 1M tokens), designed for high volume, real-time applications.</td>
+                    <td>High-volume applications, real-time interactions, cost-effective chatbots, quick summarization, data extraction, mobile use.</td>
+                </tr>
+                <tr>
+                    <td><strong>Gemini 1.5 Pro</strong></td>
+                    <td>2024</td>
+                    <td>Multimodal transformer, optimized for performance across a wide range of tasks. Introduced significant context window.</td>
+                    <td>Highly capable, multimodal input (text, images, audio, video), large context window (1M tokens), strong reasoning and coding. Successor to Gemini 1.0 Pro.</td>
+                    <td>Complex reasoning, large document analysis, coding, general purpose AI assistant.</td>
+                </tr>
+                <tr>
+                    <td><strong>Gemini 1.5 Flash</strong></td>
+                    <td>2024</td>
+                    <td>Optimized version of Gemini 1.5 Pro for speed and efficiency.</td>
+                    <td>Fast and versatile performance, multimodal, large context window (1M tokens), good for a diverse variety of tasks where speed is critical.</td>
+                    <td>Fast responses, versatile applications, chatbots, text summarization, content generation.</td>
+                </tr>
+                <tr>
+                    <td><strong>Gemini 1.0 Ultra</strong></td>
+                    <td>2024</td>
+                    <td>First generation of the largest Gemini model, designed for highly complex tasks.</td>
+                    <td>Most capable of the Gemini 1.0 series, advanced analytical capabilities, strong for coding, mathematical reasoning, multimodal reasoning.</td>
+                    <td>Highly complex tasks, advanced research, sophisticated applications.</td>
+                </tr>
+                <tr>
+                    <td><strong>Gemini 1.0 Pro</strong></td>
+                    <td>2023</td>
+                    <td>General-purpose model of the Gemini 1.0 series.</td>
+                    <td>Good balance of capability and efficiency, multimodal, robust for a wide range of tasks. Powered initial versions of Bard (now Gemini chatbot).</td>
+                    <td>General-purpose AI assistant, chatbots, text generation, summarization, information retrieval.</td>
+                </tr>
+                <tr>
+                    <td><strong>Gemini 1.0 Nano</strong></td>
+                    <td>2023</td>
+                    <td>Smaller, distilled versions of larger Gemini models.</td>
+                    <td>Optimized for on-device performance, low latency, efficient on mobile devices.</td>
+                    <td>On-device AI (e.g., Pixel phones), offline capabilities, quick replies, local data processing.</td>
+                </tr>
+                <tr>
+                    <td><strong>PaLM 2</strong></td>
+                    <td>2023</td>
+                    <td>Pathways Language Model 2, a large transformer model. Trained on a diverse mix of languages, programming, math, science, and web content.</td>
+                    <td>Highly multilingual (100+ languages), enhanced reasoning, strong coding assistance, improved contextual understanding, faster inference than PaLM.</td>
+                    <td>Multilingual applications, code generation/review, advanced reasoning in text, powering chatbots and intelligent assistants before Gemini's full rollout.</td>
+                </tr>
+                <tr>
+                    <td><strong>Imagen Series</strong></td>
+                    <td>2022 onwards</td>
+                    <td>Text-to-image diffusion models, combining large transformer language models (like T5) with high-fidelity diffusion models.</td>
+                    <td>Generates photorealistic images from text, deep language understanding for image synthesis, various styles, can refine and edit images. (Imagen 3 and 4 are latest versions with improvements in detail, lighting, speed, and text rendering).</td>
+                    <td>Creative image generation, product design, content creation for marketing, generating visual assets from descriptions.</td>
+                </tr>
+                <tr>
+                    <td><strong>Whisper</strong></td>
+                    <td>2022</td>
+                    <td>Automatic Speech Recognition (ASR) model, trained on 680,000+ hours of multilingual and transcribed audio data.</td>
+                    <td>Highly accurate speech-to-text conversion across many languages, robust to various accents and background noise, can perform language identification and translation.</td>
+                    <td>Transcription services, voice assistants, multilingual audio processing, subtitle generation, accessibility tools.</td>
+                </tr>
+                <tr>
+                    <td><strong>AlphaFold (various)</strong></td>
+                    <td>2018 onwards</td>
+                    <td>AI system developed by Google DeepMind for protein structure prediction, using deep learning. (AlphaFold 3 in 2024).</td>
+                    <td>Predicts 3D protein structures from amino acid sequences with high accuracy. AlphaFold 3 extends to predict interactions of proteins with DNA, RNA, ligands, and ions. Accelerated breakthroughs in biology and medicine.</td>
+                    <td>Drug discovery, disease research, understanding biological processes, materials science, vaccine development.</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2><span class="check-icon">✅</span> OpenAI Models</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Model Name</th>
+                    <th>Release</th>
+                    <th>How It Was Made</th>
+                    <th>Key Features</th>
+                    <th>Best For</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>GPT-4o</strong></td>
+                    <td>2024</td>
+                    <td>Trained from scratch as a multimodal transformer using text, vision, audio all in a shared neural net.</td>
+                    <td>Fastest GPT-4-level model, supports text, images, audio (speech in/out).</td>
+                    <td>Multimodal tasks, emotional responses, natural conversations, voice assistant.</td>
+                </tr>
+                <tr>
+                    <td><strong>GPT-4o mini / o4-mini</strong></td>
+                    <td>2024</td>
+                    <td>Distilled or pruned version of GPT-4o to reduce size and cost.</td>
+                    <td>Optimized for speed and efficiency, still capable across basic tasks.</td>
+                    <td>Mobile use, cost-effective apps, everyday tools.</td>
+                </tr>
+                <tr>
+                    <td><strong>GPT-4 Turbo</strong></td>
+                    <td>2023</td>
+                    <td>Likely a fine-tuned version of GPT-4 with faster inference and longer context.</td>
+                    <td>Cheaper, faster, up to 128k context window.</td>
+                    <td>Complex workflows, long documents, cheaper high-quality text generation.</td>
+                </tr>
+                <tr>
+                    <td><strong>GPT-4</strong></td>
+                    <td>2023</td>
+                    <td>Large-scale transformer model, possibly using a Mixture of Experts (MoE) setup.</td>
+                    <td>Strong reasoning, writing, and coding skills; slower than Turbo/o4.</td>
+                    <td>Deep reasoning, coding, creative tasks.</td>
+                </tr>
+                <tr>
+                    <td><strong>GPT-3.5</strong></td>
+                    <td>2022</td>
+                    <td>A refined and optimized version of GPT-3, with instruction tuning.</td>
+                    <td>Good general-purpose model, faster than GPT-4 but less powerful.</td>
+                    <td>Everyday tasks, chatbots, moderate reasoning.</td>
+                </tr>
+                <tr>
+                    <td><strong>GPT-3</strong></td>
+                    <td>2020</td>
+                    <td>175B-parameter transformer trained on internet-scale text.</td>
+                    <td>First widely adopted GPT with few-shot learning abilities.</td>
+                    <td>Language understanding, prompting experiments.</td>
+                </tr>
+                <tr>
+                    <td><strong>Codex</strong></td>
+                    <td>2021</td>
+                    <td>Fine-tuned version of GPT-3 on public code datasets (e.g., GitHub).</td>
+                    <td>Programming-focused model powering tools like GitHub Copilot.</td>
+                    <td>Code generation, autocomplete, dev tools.</td>
+                </tr>
+                <tr>
+                    <td><strong>Whisper</strong></td>
+                    <td>2022</td>
+                    <td>ASR model trained on 680,000+ hours of multilingual/transcribed audio.</td>
+                    <td>Speech-to-text across multiple languages.</td>
+                    <td>Transcription, voice commands, audio apps.</td>
+                </tr>
+                <tr>
+                    <td><strong>DALL·E 2/3</strong></td>
+                    <td>2022–2023</td>
+                    <td>Diffusion models trained on text–image pairs.</td>
+                    <td>Generates images from prompts; DALL·E 3 improves realism and prompt-following.</td>
+                    <td>Art generation, illustrations, creative media.</td>
+                </tr>
+                <tr>
+                    <td><strong>CLIP</strong></td>
+                    <td>2021</td>
+                    <td>Trained to associate images with text using contrastive learning.</td>
+                    <td>Enables image + text understanding; zero-shot image classification.</td>
+                    <td>Vision tasks, multimodal search, feature extraction for other models.</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
